@@ -1,0 +1,330 @@
+header{
+    z-index: 3;
+    position: fixed;
+    &.header-mode-2 {
+        position: absolute;
+    }
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: $animationTime-slow $animationTimingFunc all;
+    &.headroom--pinned{
+        transform: translateY(0);
+    }
+    &.headroom--unpinned{
+        transform: translateY(-80px);
+    }
+
+    /* fallback 时为深色底浅色字 */
+    background-color: $headerBgColor;
+    color: $headerTextColor;
+    @supports (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px)) {
+        background-color: $headerBgColor-blur;
+        backdrop-filter: blur(10px);
+    }
+    .container{
+        height: 58px;
+        @media screen and (max-width:767px)  {
+            height: 50px;
+        }
+        display: flex;
+        align-items: center;
+        nav{
+            flex: 1;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            @media screen and (max-width: 767px) {
+                justify-content: space-around;
+            }
+            a, span.dropdown {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0.3rem 0.55rem;
+                transition: 0.3s $animationTimingFunc all;
+                color: $headerTextColor;
+                height: 100%;
+                @media screen and (min-width: 1024.5px) {
+                    &:hover {
+                        color: $headerTextColor-highlight;
+                    }
+                    &:not(.brand):not(#toggle-mobile-search):hover{
+                        background: $headerBgColor;
+                        @supports (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px)) {
+                            background-color: rgba(0, 0, 0, 0.15);
+                        }
+                    }
+                }
+                &.brand{
+                    font-weight: 600;
+                    margin-right: 1rem;
+                    font-size: 1.7rem;
+                    letter-spacing: 0.075rem;
+                    position: absolute;
+                    left: 0;
+                    padding: 0;
+                    margin: 0;
+                    height: 100%;
+                    @media screen and (max-width: 767px) {
+                        position: relative;
+                        left: unset;
+                    }
+                }
+                &.toggle{
+                    display: none;
+                    height: 100%;
+                    span {
+                        left: 0;
+                    }
+                    span, span::before, span::after {
+                        background-color: $headerTextColor;
+                    }
+                }
+                &#toggle-setting {
+                    display: none;
+                }
+                @media screen and (max-width: 767px){
+                    &.brand{
+                        font-size: 1.5rem;
+                        margin-right: 0;
+                    }
+                    &:not(.brand){
+                        display: none;
+                    }
+                    &.toggle{
+                        display: flex;
+                        position: absolute;
+                        left: 1rem;
+                        @media screen and (max-width: 767px) {
+                            left: 0;
+                        }
+                    }
+                    &#toggle-setting {
+                        display: flex;
+                        position: absolute;
+                        right: 1.75rem;;
+                        font-size: 1.4rem;
+                        line-height: 1.7;
+                    }
+                }
+            }
+            span.dropdown{
+                position: relative;
+                cursor: pointer;
+                transition: 0.3s $animationTimingFunc all;
+                ul{
+                    transition: 0.3s $animationTimingFunc all;
+                    position: absolute;
+                    display: none;
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    min-width: 100%;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: $headerBgColor-light;
+                    @supports (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px)) {
+                        background: rgba(0, 0, 0, 0.5)
+                    }
+                    li{
+                        text-align: left;
+                        padding: 0.5em;
+                        transition: 0.3s all;
+                        white-space: nowrap;
+                        &:hover{
+                            color: $headerTextColor-highlight;
+                        }
+                    }
+                }
+                &:hover ul {
+                    display: block;
+                }
+            }
+            span.search-form-desktop{
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                label{
+                    position: absolute;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    left: 0.5rem;
+                }
+                input{
+                    width: 7rem;
+                    height: 1.5rem;
+                    padding: 0.85rem;
+                    padding-left: 3rem;
+                    transition: 0.3s $animationTimingFunc all;
+                    outline: none;
+                    background: none;
+                    border: solid 1px $headerTextColor;
+                    border-radius: 1rem;
+                    color: inherit;
+                    &:focus{
+                        width: 11rem;
+                    }
+                    &::-webkit-input-placeholder{
+                        color: $headerTextColor;
+                        font-size: 1rem;
+                    }
+                }
+                @media screen and (max-width: 767px) {
+                    display: none;
+                }
+            }
+
+            #toggle-mobile-search{
+                display: none;
+                position: absolute;
+                right: -0.55rem;
+                font-size: 1.4rem;
+                line-height: 1.7;
+                @media screen and (max-width: 767px) {
+                    display: flex;
+                }
+            }
+        }
+    }
+    .mobile-search-form{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        transition: 0.3s $animationTimingFunc all;
+        transform: translateY(-10px);
+        visibility: hidden;
+        opacity: 0;
+        width: 100%;
+        display: flex;
+        padding: 0.5rem;
+        background: inherit;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        label{
+            position: absolute;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            left: 0.5rem;
+            top: 0;
+        }
+        input{
+            display: block;
+            flex: 1;
+            border-radius: 0;
+            border: none;
+            outline: none;
+            background: none;
+            padding-left: 3rem;
+            color: inherit;
+            &::-webkit-input-placeholder{
+                color:$headerTextColor;
+                font-size: 1rem;
+            }
+            &::placeholder{
+                color: $headerTextColor;
+            }
+        }
+        button{
+            background: none;
+            outline: none;
+            border: none;
+            color: inherit;
+        }
+        &.opened{
+            transform: translateY(0);
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+    &.pull-up {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        .container nav span.dropdown ul {
+            box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.7);
+        }
+    }
+}
+
+body:not(.theme-dark) header {
+    &.force-dark, &.pull-up {
+        /* 强制深色，防止在浅色背景下表现差劲 */
+        @supports (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px)) {
+            background: rgba(0, 0, 0, 0.86)
+        }
+        .container .dropdown ul {
+            background: rgba(0, 0, 0, 0.86)
+        }
+    }
+}
+
+
+#nav-mobile{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 2;
+    display: flex;
+    display: none;
+    flex-direction: column;
+    padding: 0 1rem;
+    padding-bottom: 8rem;
+    .search{
+        margin-top: calc(60px + 1rem);
+        display: flex;
+        input{
+            display: block;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.34);
+            padding: 0.5rem;
+            padding-left: 0;
+            background: none;
+            color: #ddd;
+            &::-webkit-input-placeholder{
+                color:#ddd;
+                font-size: 0.9rem;
+                font-weight: 300;
+            }
+            flex: 1;
+        }    
+    }
+    section{
+        &#pages{
+            margin-top: calc(60px + 1rem);
+        }
+        display: block;
+        margin-top: 30px;
+        padding-top: 1.5rem;
+        position: relative;
+        border-bottom: 1px solid rgba(255,255,255,0.34);
+        &,& *{
+            color: #ddd;
+        }
+        &::before{
+            content: attr(data-title);
+            font-weight: 600;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        padding-bottom: 1rem;
+        nav{
+            display: flex;
+            flex-flow: row wrap;
+            a{
+                width: 50%;
+                text-align: center;
+                line-height: 3;
+            }
+        }
+    }
+}

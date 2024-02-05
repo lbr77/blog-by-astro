@@ -1,0 +1,117 @@
+---
+import {ImageMetadata} from "astro";
+import {getType} from "../utils/typegen.ts";
+interface Props{
+    url: URL;
+    banner: ImageMetadata
+}
+const url = Astro.props.url;
+const banner = Astro.props.banner|| {src: "/banner.png"};
+const config = Astro.locals.config;
+
+const generateLD = (url: URL) => {
+    const types = getType(url);
+    if(types==="index"){
+        return {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "publisher": {
+                "@type": "Organization",
+                "name": "LiBr",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "/logo.png"
+                }
+            },
+            "url": url.href,
+            "image": {
+                "@type": "ImageObject",
+                "url": banner.src,
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": url.href
+            },
+            "description": config.description,
+        }
+    }else if(types==='page'){
+        return {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "publisher": {
+                "@type": "Organization",
+                "name": "LiBr",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "/logo.png"
+                }
+            },
+            "url": url.href,
+            "image": {
+                "@type": "ImageObject",
+                "url": banner.src,
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": url.href
+            },
+            "description": config.description,
+        }
+    }else if(types==='post'){
+        return {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "publisher": {
+                "@type": "Organization",
+                "name": "LiBr",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "/logo.png"
+                }
+            },
+            "url": url.href,
+            "image": {
+                "@type": "ImageObject",
+                "url": banner.src,
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": url.href
+            },
+            "description": config.description,
+        }
+    }else if(types==='archive'){
+        return {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "publisher": {
+                "@type": "Organization",
+                "name": "LiBr",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "/logo.png"
+                }
+            },
+            "url": url.href,
+            "image": {
+                "@type": "ImageObject",
+                "url": banner.src,
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": url.href
+            },
+            "description": config.description,
+        }
+    }
+}
+const ld = generateLD(url);
+const lds = JSON.stringify(ld);
+---
+
+<script id="ld-data" type="application/ld+json"></script>
+<script data-ld={lds}>
+    const ld = document.currentScript.dataset.ld;
+    document.getElementById('ld-data').innerText = ld;
+</script>
+

@@ -1,0 +1,20 @@
+---
+import {ImageMetadata} from "astro";
+interface Props {
+    title?: string;
+    desc?: string;
+    banner?: ImageMetadata;
+}
+const props = Astro.props;
+const title = props.titile || Astro.locals.config.title;
+import Ldjson from "../components/Ldjson.astro";
+import Banner from "../components/Banner.astro";
+const url = new URL(Astro.request.url);
+---
+<main id="pjax-container">
+    <title hidden>
+        {title}
+    </title>
+    <Ldjson url={url} banner={props.banner}/>
+    <Banner banner="/banner.jpg"/>
+</main>

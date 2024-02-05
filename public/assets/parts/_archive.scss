@@ -1,0 +1,102 @@
+section#archive-list{
+    margin-top: 1rem;
+    h2 {
+        margin: 0.875rem 0 0.125rem;
+    }
+    p.post-meta{
+        text-align: center;
+    }
+    span.num-posts {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: $fadeColor;
+        .theme-dark &{
+            color: $td-textColor-dark;
+        }
+    }
+    a.toggle-archive{
+        font-size: 0.9rem;
+        display: block;
+        background: #eee;
+        font-weight: 400;
+        .theme-dark &{
+            background: $td-bgColor-dark;
+        }
+        display: inline-block;
+        line-height: 1;
+        border: none!important;
+        border-radius: 0.3rem;
+        padding: 0.3rem;
+        width: 1.5rem;
+        text-align: center;
+        transition: 0.3s $animationTimingFunc all;
+        color: $textColor;
+        .theme-dark &{
+            background: $td-bgColor-dark;
+            color: $td-textColor;
+        }
+        &:hover{
+            background: $darkColor;
+            color: #dddddd;
+            .theme-dark &{
+                background: $td-textColor-light;
+                color: $darkColor;
+            }
+        }
+    }
+    section.year {
+        position: relative;
+        transition-property: max-height;
+        transition-timing-function: $animationTimingFunc;
+        margin: 0;
+        overflow-y: hidden;
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li{
+                position: relative;
+                line-height: 1.78;
+                padding: 0;
+                margin: 0;
+                border-bottom: 1px dotted #ddd;
+                transition: $animationTime-slow $animationTimingFunc border;
+                .theme-dark &{
+                    border-color: $td-borderColor;
+                }
+                &:hover {
+                    border-color: $textColor;
+                }
+                .theme-dark &:hover{
+                    border-color: $td-textColor;
+                }
+                a{
+                    display: block;
+                    border: none!important;
+                    padding: 0.5rem 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    span.date {
+                        margin-right: 1rem;
+                        color: $fadeColor;
+                        .theme-dark &{
+                            color: $td-textColor-dark;
+                        }
+                    }
+                    h4{
+                        display: inline;
+                    }
+                    &.show-word-count::after{
+                        content: " ＋ " attr(data-words) " 字";
+                        font-size: 0.9rem;
+                        color: rgba(0,0,0,0.3);
+                        .theme-dark &{
+                            color: $td-textColor-dark;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

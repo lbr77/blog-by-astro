@@ -1,0 +1,55 @@
+---
+const themeConfig = Astro.locals.config.siteConfig;
+const title = themeConfig.title;
+const nav = themeConfig.navs;
+---
+<header class="header-mode-2">
+    <div class="container wider">
+        <nav>
+            <a role=button aria-label="展开导航" class="toggle" target="_self" href="javascript:void(0);" onclick="VOID_Ui.toggleNav(this);">
+                <span></span>
+            </a>
+            <a class="brand" href="/">{title}</a>
+            <a href="/">首页</a>
+            {
+                nav.map((item, index) => {
+                    return <a href={item.link}>{item.text}</a>;
+                })
+            }
+            <span class="dropdown">分类
+                <ul>
+                    <li>没做到这一步呢</li>
+                </ul>
+            </span>
+            <!--search: WIP-->
+            <span class="hidden-xs search-form-desktop">
+                <label for="search">搜索</label>
+                <input onkeydown="VOID.enterSearch(this);" type="text" name="search-content" id="search" required />
+            </span>
+            <a class="search-form-input" style="display:flex"
+            role=button aria-label="展开搜索" id="toggle-mobile-search" target="_self"
+            href="javascript:void(0);"
+            onclick="VOID_Ui.toggleSearch(this);">
+                <i class="voidicon-search"></i>
+            </a>
+            <a target="_self" href="javascript:void(0);" id="toggle-setting" onclick="VOID_Ui.toggleSettingPanel();"><i class="voidicon-cog"></i></a>
+        </nav>
+    </div>
+    <div class="mobile-search-form">
+        <label for="search_new">搜索</label>
+        <input onkeydown="VOID.enterSearch(this);" type="text" name="search-content" id="search_new" required placeholder="输入内容然后 Go!" />
+        <button onclick="VOID.startSearch('#search_new');">Go!</button>
+    </div>
+</header>
+<div id="nav-mobile">
+    <!--WIP-->
+    <!--<section id="pages" data-title="PAGES">-->
+    <!--    <nav>-->
+    <!--        &lt;!&ndash;WIP反正理论上不会有人用手机看我博客的（点头&ndash;&gt;-->
+    <!--    </nav>-->
+    <!--</section>-->
+    <!--<section id="categories" data-title="CATEGORIES">-->
+    <!--    <nav>-->
+    <!--        &lt;!&ndash;WIP反正理论上不会有人用手机看我博客的（点头&ndash;&gt;-->
+    <!--    </nav>-->
+</div>

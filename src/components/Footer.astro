@@ -1,0 +1,77 @@
+---
+const siteConfig = Astro.locals.config.siteConfig;
+const themeConfig = Astro.locals.config.themeConfig;
+---
+
+<>
+    <footer>
+        <div class="container wide">
+            <section>
+                <p>© {new Date().getFullYear()} <span class="brand">{siteConfig.title}</span></p>
+                <p>感谢陪伴：<span id="uptime"></span></p>
+            </section>
+            <section>
+                <p>Proudly using <a href="https://astro.build">Astro</a> • <a href="https://blog.imalan.cn/archives/247/">Theme VOID</a></p>
+            </section>
+        </div>
+    </footer>
+    <aside id="ctrler-panel">
+        <div class="ctrler-item" id="go-top">
+            <a target="_self" aria-label="返回顶部" href="javascript:void(0);" style="transform: translateX(-2px);" onclick="VOID_SmoothScroller.scrollTo(0);"><i class="voidicon-up"></i></a>
+        </div>
+
+
+        <div aria-label="展开或关闭设置面板" id="toggle-setting-pc" class="ctrler-item hidden-xs">
+            <a target="_self" href="javascript:void(0);" style="transform: translateX(-2px);" onclick="VOID_Ui.toggleSettingPanel();"><i class="voidicon-cog"></i></a>
+        </div>
+        <div aria-label="展开或关闭文章目录" class="ctrler-item" id="toggle-toc">
+            <a target="_self" href="javascript:void(0);" style="margin-left: -2px" onclick="TOC.toggle()"><i class="voidicon-left"></i></a>
+        </div>
+    </aside>
+    <aside hidden id="setting-panel">
+        <section>
+            <div id="toggle-night">
+                <a target="_self" href="javascript:void(0)" onclick="VOID_Ui.DarkModeSwitcher.toggleByHand();"><i></i></a>
+            </div>
+            <div id="adjust-text-container">
+                <div class="adjust-text-item">
+                    <a target="_self" href="javascript:void(0)" onclick="VOID_Ui.adjustTextsize(false);"><i class="voidicon-font"></i>-</a>
+                    <span id="current_textsize"></span>
+                    <a target="_self" href="javascript:void(0)" onclick="VOID_Ui.adjustTextsize(true);"><i class="voidicon-font"></i>+</a>
+                </div>
+                <div class="adjust-text-item">
+                    <a target="_self" class="font-indicator  checked" href="javascript:void(0)" onclick="VOID_Ui.toggleSerif(this, false);">Sans</a>
+                    <a target="_self" class="font-indicator checked" href="javascript:void(0)" onclick="VOID_Ui.toggleSerif(this, true);">Serif</a>
+                </div>
+            </div>
+        </section>
+        <section id="links">
+            <a target="_self" class="link" href="javascript:void(0)" onclick="VOID_Ui.toggleLoginForm()"><i class="voidicon-user"></i></a>
+            <!--<a class="link" title="RSS" target="_blank" href="/feed.xml"><i class="voidicon-rss"></i></a>-->
+        </section>
+        <!--    TODO 友情链接系统 -->
+    </aside>
+    <!--{themeConfig.serviceWorker != "" && } 跳过serviceworker了这个是最后再搞的东西xxx-->
+    {themeConfig.enableMath &&  <script is:inline src="/assets/libs/mathjax/2.7.4/MathJax.js"/>}
+    <script is:inline src="/assets/VOID.js"/>
+    <script is:inline>
+        if($(".OwO").length > 0){ //似乎是评论系统的表情包但是评论系统我用不上啊
+            new OwO({
+                logo: 'OωO',
+                container: document.getElementsByClassName('OwO')[0],
+                target: document.getElementsByClassName('input-area')[0],
+                api: '/assets/libs/owo/OwO_03.json',
+                position: 'down',
+                width: '400px',
+                maxHeight: '250px'
+            });
+        }
+    </script>
+    <script is:inline data-reloadfunc={themeConfig.pjaxreload}>
+        $(document).on('pjax:complete',function(){
+            eval(document.currentScript.dataset.reloadfunc);//额非常无语的写法
+        })
+        //     EXSearch,pass.
+    </script>
+<!--    这里放自定义的footer内容哦！  -->
+</>
