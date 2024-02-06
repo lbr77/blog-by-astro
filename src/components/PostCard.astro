@@ -1,5 +1,6 @@
 ---
 const data = Astro.props.post;
+import {getPostWords} from "../utils/static";
 let generateClass = () => {
     let ret = "masonry-item style-";
     if (data.data.showFullContent == 1) {
@@ -23,16 +24,7 @@ let formatCustomDate = (date) => {
 
     return `${month} ${day}${suffix},${year} `;
 }
-let coundMarkdownWords = (markdownText) => {
-    // 移除Markdown中的标签
-    const textWithoutTags = markdownText.replace(/<[^>]*>/g, '');
 
-    // 使用空格分割文本并过滤空字符串，以计算单词数量
-    const words = textWithoutTags.split(/\s+/).filter(word => word !== '');
-
-    // 返回字数统计结果
-    return textWithoutTags.length;
-}
 ---
 <li id={`p-${data.slug}`} class={generateClass()}>
     <!--{ !data.data.showFullContent && }-->
@@ -48,7 +40,7 @@ let coundMarkdownWords = (markdownText) => {
                     <div class="post-meta-index">
                         <time datetime={data.data.date}>{formatCustomDate(data.data.date)}</time>
                         <!--    Word Count TODO-->+
-                        <span class="word-count">{coundMarkdownWords(data.body)} 字</span>
+                        <span class="word-count">{getPostWords(data.body)} 字</span>
                     </div>
                     <h1 class="title">{data.data.title}</h1>
                     <!--{data.data.showFullContent==1 && <a href={`/posts/${data.slug}`}></a>}-->

@@ -1,7 +1,7 @@
 ---
 import LayoutDefault from "../../layouts/LayoutDefault.astro";
 import {getEntry} from 'astro:content';
-import PostLayout from "../../layouts/PostLayout.astro";
+import PostLayout from "../../layouts/LayoutPost.astro";
 import Layout404 from "../../layouts/Layout404.astro";
 const slug = Astro.params.slug;
 const blog = await getEntry("posts", slug);

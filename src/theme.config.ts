@@ -1,4 +1,5 @@
 // @ts-ignore
+// @ts-ignore
 export const THEME_CONFIG: App.Locals['config'] = {
     siteConfig: {
         title: "LiBr",
@@ -23,6 +24,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
             },
         ],
     },
+    //@ts-ignore
     themeConfig: {
         //首页顶部大图
         defaultBanner: "/assets/banner.jpg",

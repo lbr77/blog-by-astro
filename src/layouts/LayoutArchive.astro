@@ -1,0 +1,31 @@
+---
+import Ldjson from "../components/Ldjson.astro";
+import Banner from "../components/Banner.astro";
+import ArchiveList from "../components/ArchiveList.astro";
+import {statics} from "../utils/static";
+const title = "归档";
+const url = new URL(Astro.request.url);
+const siteConfig = Astro.locals.config.siteConfig;
+const themeConfig = Astro.locals.config.themeConfig;
+let builtclass = ["wrapper", "container"];
+if (themeConfig.indexStyle == 1) {
+    builtclass.push("narrow");
+} else {
+    builtclass.push("wide");
+}
+const {cate,tags,words,posts} = await statics();
+const subTitle = `${cate}  分类 x ${posts} 文章 x ${tags} 标签 x ${words} 字` ;
+
+---
+<title hidden>
+    {title}
+</title>
+<Ldjson url={url} banner={"/assets/banner.jpg"}/>
+<Banner
+        banner="/assets/banner.jpg"
+        type="index"
+        title={title}
+        desc={subTitle}/>
+<div class:list={builtclass}>
+    <ArchiveList/>
+</div>

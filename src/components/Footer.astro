@@ -9,7 +9,7 @@ const themeConfig = Astro.locals.config.themeConfig;
             <section>
                 <p>© {new Date().getFullYear()}&#20;<span class="brand">{siteConfig.title}</span></p>
                 <p>感谢陪伴：<span id="uptime"></span></p>
-                <p><span id="hitokoto_text"></span></p>
+                <p><span id="hitokoto_text">少女祈祷中...</span></p>
             </section>
             <section>
                 <p>Proudly using <a href="https://astro.build">Astro</a> • <a
@@ -96,8 +96,11 @@ const themeConfig = Astro.locals.config.themeConfig;
         fetch("https://v1.hitokoto.cn")
             .then(response => response.json())
             .then(data => {
-                $("#hitokoto_text")[0].innerText = `${data.hitokoto} —— ${data.from}`;
-            });
+                $("#hitokoto_text")[0].innerText = `${data.hitokoto} —— 「${data.from}」`;
+            }).catch((e)=>{
+                console.log(e);
+                $("#hitokoto_text")[0].innerText = `祈祷失败了...的说`
+        });
         //     EXSearch,pass.
     </script>
     <!--    这里放自定义的footer内容哦！  -->

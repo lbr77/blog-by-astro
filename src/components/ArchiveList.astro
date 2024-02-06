@@ -1,0 +1,24 @@
+---
+import {buildByYear} from "../utils/static";
+const posts = await buildByYear();
+---
+<section id="archive-list" class="yue float-up">
+    {Object.keys(posts).sort().reverse().map((year) => (
+        <>
+            <h2>{year} <span class="num-posts">{`${posts[year].length}篇`}</span>
+            <a no-pjax data-year={year} data-num={posts[year].length} class="toggle-archive" href="javascript:void(0);" onclick="VOID_Ui.toggleArchive(this); return false;">-</a></h2>
+            <section id={`year-${year}`} class="year shrink" style="max-height: 0px; transition-duration: 0.03s">
+                <ul>
+                    {posts[year].map((post) => (
+                        <li>
+                            <a class="archive-title show-word-count pjax" data-words={post.body.length} href={`/posts/${post.slug}`}>
+                                <span class="date">{`${new Date(post.data.date).getMonth()+1}-${new Date(post.data.date).getDate()}`}</span>
+                                {post.data.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        </>
+    ))}
+</section>
