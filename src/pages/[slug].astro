@@ -1,82 +1,16 @@
 ---
-import {getCollection} from "astro:content";
 import {getEntry} from "astro:content";
-import LayoutDefault from "../layouts/LayoutDefault.astro";
-import Banner from "../components/Banner.astro";
-import Ldjson from "../components/Ldjson.astro";
 import Layout404 from "../layouts/Layout404.astro";
+import NormalPageLayout from "../layouts/NormalPageLayout.astro";
+import LayoutDefault from "../layouts/LayoutDefault.astro";
 // 其他的页面（使用mdx）和这个模板。
 const slug = Astro.params.slug;
 const blog = await getEntry("pages", slug);
 if(blog){
     const {Content} = await blog.render();
 }
-const siteConfig = Astro.locals.config.siteConfig;
-const themeConfig = Astro.locals.config.themeConfig;
 ---
 {blog && <LayoutDefault title={blog.data.title}>
-    <Ldjson url={new URL(Astro.request.url)} banner={blog.data.banner}/>
-    <Banner banner={blog.data.banner} type="post" bannerStyle={blog.data.bannerStyle} title={blog.data.title}
-            desc={blog.data.excerpt}/>
-    <div class="wrapper container">
-        <div class="contents-wrap">
-            <section id="post" class="float-up">
-                <article class="post yue">
-                    <!--    这里应该有一个过时提醒，但是过段时间做吧x TODO -->
-                    <div class="articleBody" class="full">
-                        <Content/> <!--  文章内容中代码块渲染似乎没做好。。。还得调试 TODO -->
-                    </div>
-                    <div class="social-button"
-                         data-url={Astro.url.toString()}
-                         data-title={blog.data.title}
-                         data-excerpt={blog.data.excerpt}
-                         data-img={blog.data.banner}
-                         data-twitter={themeConfig.twitterId || ""}
-                         data-weibo={themeConfig.weiboId || ""}
-                         data-image={blog.data.banner}>
-                        <!--    赞赏码似乎没啥必要了还是加上吧 TODO-->
-                        <a role=button
-                           aria-label="为文章点赞"
-                           id="social"
-                           href="javascript:void(0);" onclick="VOID_Vote.vote(this);"
-                           data-item-id="<?php echo $this->cid;?>"
-                           data-type="up"
-                           data-table="content"
-                           class="btn btn-normal post-like vote-button"
-                        >Like <span class="value">0</span>
-                        </a>
-                        <a aria-label="分享到微博" href="javascript:void(0);" onclick="Share.toWeibo(this);"
-                           class="social-button-icon"><i class="voidicon-weibo"></i></a>
-                        <a aria-label="分享到Twitter" href="javascript:void(0);" onclick="Share.toTwitter(this);"
-                           class="social-button-icon"><i class="voidicon-twitter"></i></a>
-                    </div>
-                    <!--    分页不做了 DEPRECATED -->
-                </article>
-                <script is:inline>
-                    (function () {
-                        $.each($('iframe'), function (i, item) {
-                            var src = $(item).attr('src');
-                            if (typeof src === 'string' && src.indexOf('player.bilibili.com') > -1) {
-                                // $(item).addClass('bili-player');
-                                // if (src.indexOf('&high_quality') < 0) {
-                                //     src += '&high_quality=1'; // 启用高质量
-                                //     $(item).attr('src', src);
-                                // }
-                                $(item).wrap('<div class="bili-player"></div>');
-                            }
-                        });
-                    })();
-                </script>
-            </section>
-        </div>
-        <div class="toc-mask" onclick="TOC.close();"></div>
-        <div aria-label="文章目录" class="TOC"></div>
-        <style>
-            #toggle-toc {
-                display: block;
-            }
-        </style>
-    </div>
-    <!--    评论 TODO -->
+    <NormalPageLayout content={blog}/>
 </LayoutDefault>}
 {!blog && <LayoutDefault title={"找不到惹！"}> <Layout404/></LayoutDefault>}

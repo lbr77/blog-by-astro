@@ -1,0 +1,17 @@
+---
+import Banner from "../components/Banner.astro"
+import Ldjson from "../components/Ldjson.astro";
+import Posts from "../components/Posts.astro";
+const blog = Astro.props.content;
+---
+<Ldjson url={new URL(Astro.request.url)} banner={blog.data.banner}/>
+<Banner banner={blog.data.banner} type="post" bannerStyle={blog.data.bannerStyle} title={blog.data.title}
+        desc={blog.data.excerpt}/>
+<div class="wrapper container">
+    <div class="contents-wrap">
+        <section id="post" class="float-up">
+            <Posts content={blog}/>
+        </section>
+    </div>
+</div>
+<!--    评论 TODO -->
