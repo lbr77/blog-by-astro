@@ -10,8 +10,7 @@ export async function statics() {
       words += getPostWords(post.body);
   }
     return {
-        cate: Array.from(new Set(cate)).length,
-        tags: Array.from(new Set(tags)).length,
+        cate: Array.from(new Set(tags)).length,
         words: words,
         posts: posts.length
     }
@@ -36,4 +35,16 @@ export async function buildByYear(){
         years[year].push(post);
     }
     return years;
+}
+
+
+export async function buildByTags(){
+    let posts = await getCollection("posts");
+    let tags = [];
+    for(let post of posts){
+        for(let tag of post.data.tags){
+            tags.push(tag);
+        }
+    }
+    return Array.from(new Set(tags));
 }

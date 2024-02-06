@@ -1,4 +1,9 @@
 ---
+import LayoutCategory from "../../layouts/LayoutCategory.astro";
+import LayoutDefault from "../../layouts/LayoutDefault.astro";
 const {slug} = Astro.params;
-
+const title = `分类 ${slug} 下的文章`;
 ---
+<LayoutDefault title={title}>
+    <LayoutCategory category={slug} title={title} />
+</LayoutDefault>

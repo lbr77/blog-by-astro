@@ -5,8 +5,7 @@ const blogCollecction = defineCollection({
     schema: z.object({
         title: z.string(),
         date: z.date().default(new Date()),
-        tags: z.array(z.string()),
-        category: z.string().default("生活"),
+        tags: z.array(z.string()).default(["生活"]),
         banner: z.string().default(""),
         excerpt: z.string(),
         bannerStyle: z.number().default(0),//0显示在顶部 1显示在顶部+模糊 2.不显示

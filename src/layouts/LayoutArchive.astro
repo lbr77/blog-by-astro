@@ -2,7 +2,7 @@
 import Ldjson from "../components/Ldjson.astro";
 import Banner from "../components/Banner.astro";
 import ArchiveList from "../components/ArchiveList.astro";
-import {statics} from "../utils/static";
+import {statics} from "../utils/statistics";
 const title = "归档";
 const url = new URL(Astro.request.url);
 const siteConfig = Astro.locals.config.siteConfig;
@@ -14,7 +14,7 @@ if (themeConfig.indexStyle == 1) {
     builtclass.push("wide");
 }
 const {cate,tags,words,posts} = await statics();
-const subTitle = `${cate}  分类 x ${posts} 文章 x ${tags} 标签 x ${words} 字` ;
+const subTitle = `${posts} 文章 x ${cate} 标签 x ${words} 字` ;
 
 ---
 <title hidden>
