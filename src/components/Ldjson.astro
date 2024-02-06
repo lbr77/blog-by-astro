@@ -1,17 +1,17 @@
 ---
 import {ImageMetadata} from "astro";
 import {getType} from "../utils/typegen.ts";
-interface Props{
+interface Props {
     url: URL;
     banner: ImageMetadata
 }
 const url = Astro.props.url;
-const banner = Astro.props.banner|| {src: "/banner.png"};
-const config = Astro.locals.config;
+const banner = Astro.props.banner || {src: "/banner.png"};
+const config = Astro.locals.config.siteConfig;
 
 const generateLD = (url: URL) => {
     const types = getType(url);
-    if(types==="index"){
+    if (types === "index") {
         return {
             "@context": "https://schema.org",
             "@type": "WebSite",
@@ -32,9 +32,9 @@ const generateLD = (url: URL) => {
                 "@type": "WebPage",
                 "@id": url.href
             },
-            "description": config.description,
+            "description": config.desc,
         }
-    }else if(types==='page'){
+    } else if (types === 'page') {
         return {
             "@context": "https://schema.org",
             "@type": "WebPage",
@@ -55,9 +55,9 @@ const generateLD = (url: URL) => {
                 "@type": "WebPage",
                 "@id": url.href
             },
-            "description": config.description,
+            "description": config.desc,
         }
-    }else if(types==='post'){
+    } else if (types === 'post') {
         return {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
@@ -78,9 +78,9 @@ const generateLD = (url: URL) => {
                 "@type": "WebPage",
                 "@id": url.href
             },
-            "description": config.description,
+            "description": config.desc,
         }
-    }else if(types==='archive'){
+    } else if (types === 'archive') {
         return {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
@@ -101,16 +101,14 @@ const generateLD = (url: URL) => {
                 "@type": "WebPage",
                 "@id": url.href
             },
-            "description": config.description,
+            "description": config.desc,
         }
     }
 }
-const ld = generateLD(url);
-const lds = JSON.stringify(ld);
 ---
 
 <script id="ld-data" type="application/ld+json"></script>
-<script data-ld={lds}>
+<script data-ld={JSON.stringify(generateLD(url))}>
     const ld = document.currentScript.dataset.ld;
     document.getElementById('ld-data').innerText = ld;
 </script>

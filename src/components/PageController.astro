@@ -1,0 +1,57 @@
+---
+import {getCollection} from "astro:content";
+let posts = await getCollection("posts");
+const totPage = parseInt((posts.length / 12).toString()) + 1;
+interface Props {
+    template?: string,
+    prev: string,
+    next: string,
+    splitPage: string,
+    splitWord: string,
+    nowPage: string,
+};
+const t = Astro.props;
+let r = [];
+const from = Math.max(1, parseInt(t.nowPage) - parseInt(t.splitPage));
+const to = Math.min(totPage, parseInt(t.nowPage) + parseInt(t.splitPage));
+---
+<ol class="pager">
+    {t.nowPage != "1" &&
+            <li>
+                <a href=`/?p=${parseInt(t.nowPage) - 1}`>
+                    <Fragment set:html={t.prev}/>
+                </a>
+            </li>}
+    <!--上一页-->
+    {from > 1 &&
+            <li>
+                <a href=`/?p=${1}`>1</a>
+            </li>}
+    <!--第一页-->
+    {from > 2 &&
+            <li><span>{t.splitWord}</span></li>}
+    <!--省略号-->
+    {Array.from({length: to - from + 1}, (_, i) => i + from).map((i) => (
+            <li class:list={[i == t.nowPage && "current"]}>
+                <a href={`/?p=${i}`}>{i}</a>
+            </li>
+    ))}
+    <!--中间页-->
+    {to < totPage - 1 &&
+            <li>
+                <span>{t.splitWord}</span>
+            </li>}
+    <!--省略号-->
+    {to < totPage &&
+            <li>
+                <a href=`/?p=${totPage}`>{totPage}</a>
+            </li>}
+    <!--最后页-->
+    {t.nowPage != totPage &&
+            <li>
+                <a href=`/?p=${parseInt(t.nowPage) + 1}`>
+                    <Fragment set:html={t.next}/>
+                </a>
+            </li>}
+    <!-- 下一页-->
+</ol>

@@ -6,7 +6,8 @@ const nav = themeConfig.navs;
 <header class="header-mode-2">
     <div class="container wider">
         <nav>
-            <a role=button aria-label="展开导航" class="toggle" target="_self" href="javascript:void(0);" onclick="VOID_Ui.toggleNav(this);">
+            <a role=button aria-label="展开导航" class="toggle" target="_self" href="javascript:void(0);"
+               onclick="VOID_Ui.toggleNav(this);">
                 <span></span>
             </a>
             <a class="brand" href="/">{title}</a>
@@ -24,20 +25,22 @@ const nav = themeConfig.navs;
             <!--search: WIP-->
             <span class="hidden-xs search-form-desktop">
                 <label for="search">搜索</label>
-                <input onkeydown="VOID.enterSearch(this);" type="text" name="search-content" id="search" required />
+                <input onkeydown="VOID.enterSearch(this);" type="text" name="search-content" id="search" required/>
             </span>
             <a class="search-form-input" style="display:flex"
-            role=button aria-label="展开搜索" id="toggle-mobile-search" target="_self"
-            href="javascript:void(0);"
-            onclick="VOID_Ui.toggleSearch(this);">
+               role=button aria-label="展开搜索" id="toggle-mobile-search" target="_self"
+               href="javascript:void(0);"
+               onclick="VOID_Ui.toggleSearch(this);">
                 <i class="voidicon-search"></i>
             </a>
-            <a target="_self" href="javascript:void(0);" id="toggle-setting" onclick="VOID_Ui.toggleSettingPanel();"><i class="voidicon-cog"></i></a>
+            <a target="_self" href="javascript:void(0);" id="toggle-setting" onclick="VOID_Ui.toggleSettingPanel();"><i
+                    class="voidicon-cog"></i></a>
         </nav>
     </div>
     <div class="mobile-search-form">
         <label for="search_new">搜索</label>
-        <input onkeydown="VOID.enterSearch(this);" type="text" name="search-content" id="search_new" required placeholder="输入内容然后 Go!" />
+        <input onkeydown="VOID.enterSearch(this);" type="text" name="search-content" id="search_new" required
+               placeholder="输入内容然后 Go!"/>
         <button onclick="VOID.startSearch('#search_new');">Go!</button>
     </div>
 </header>

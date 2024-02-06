@@ -1,40 +1,49 @@
 ---
-import {getType} from "../utils/typegen";
-const type = getType(new URL(Astro.request.url));
-let banner = "/assets/banner.jpg";//default banner
+interface Props {
+    type: string;
+    title: string;
+    bannerStyle: number;
+    banner: string;
+    bannerType: number;
+    desc: string;
+}
+let {type, title, bannerStyle, banner, bannerType, desc} = Astro.props;
 let blur = false;
-if(type==='post'||type=='page'){
-    banner = Astro.props.bannerType < 2 ? Astro.props.banner : "";
+if (type === 'post' || type == 'page') {
+    banner = Astro.props.bannerStyle < 2 ? banner : "";
     blur = Astro.props.bannerType === 1;
 }
 let genclass = ["lazy-wrap"];
-if(banner === ""){
+if (banner === "") {
     genclass.push("no-banner");
-}else{
+} else {
     genclass.push("loading dark");
 }
-if(type=='index'){
+if (type == 'index') {
     genclass.push("index");
 }
-if(type=='archive'){
+if (type == 'archive') {
     genclass.push("archive");
 }
-const setting = Astro.locals.config;
-// console.log(setting);
-let r = genclass.join(" ");
 ---
-<div class={r}>
-    {banner != "" ? <div id="banner" class={blur && "blur"} data-src={banner}>
-                <img src={banner} class="" data-src={banner}></div>:
-        <script is:inline>$('body>header').addClass('force-dark').addClass('no-banner');</script>
-        <style>main>.lazy-wrap{min-height: 0;}</style>
-    }
-    {type==='index'?<div class="banner-title index force-normal">
+
+<div class:list={genclass}>
+    {banner != "" ?
+            <div id="banner" class={blur && "blur"} data-src={banner}>
+                <img src={banner} class="" data-src={banner}></div> :
+            <>
+                <script is:inline>$('body>header').addClass('force-dark').addClass('no-banner');</script>
+                <style>main > .lazy-wrap {
+                    min-height: 0;
+                }</style>
+            </>}
+
+    <div class="banner-title index force-normal">
         <h1 class="post-title"><span class="brand">
-            <span>{setting.title}</span>
-        </span><br/>
-            <span class="subtitle">{setting.desc}</span>
+                        <span>{title}</span></span><br/>
+            <span class="subtitle">{desc}</span>
         </h1>
-        </div>:null}
-        <!--    一些其他页面的东西略了。   -->
+    </div>
+
+    }
 </div>

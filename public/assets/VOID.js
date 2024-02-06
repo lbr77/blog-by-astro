@@ -33,25 +33,25 @@ var VOID_Content = {
                 collapseDepth: 6
             };
             tocbot.init(toc_option);
-            $.each($('.toc-link'), function(i, item){
-                $(item).click(function(){
+            $.each($('.toc-link'), function (i, item) {
+                $(item).click(function () {
                     VOID_SmoothScroller.scrollTo($(this).attr('href'), -60);
-                    if(window.innerWidth < 1200) {
+                    if (window.innerWidth < 1200) {
                         TOC.close();
                     }
                     return false;
                 });
             });
             // 检查目录
-            if(window.innerWidth >= 1200) {
+            if (window.innerWidth >= 1200) {
                 TOC.open();
-            } 
+            }
         }
     },
 
     // 解析照片集
     parsePhotos: function () {
-        $.each($('div.articleBody figure:not(.size-parsed)'), function (i, item){
+        $.each($('div.articleBody figure:not(.size-parsed)'), function (i, item) {
             var img = new Image();
             img.onload = function () {
                 var w = parseFloat(img.width);
@@ -67,15 +67,15 @@ var VOID_Content = {
 
     // 处理友链列表
     parseBoardThumbs: function () {
-        $.each($('.board-thumb'), function(i, item) {
+        $.each($('.board-thumb'), function (i, item) {
             if (VOIDConfig.lazyload) {
                 if (VOIDConfig.browserLevelLoadingLazy) {
-                    $(item).html('<img class="lazyload browserlevel-lazy" src="' +$(item).attr('data-thumb')+ '" loading="lazy">');
+                    $(item).html('<img class="lazyload browserlevel-lazy" src="' + $(item).attr('data-thumb') + '" loading="lazy">');
                 } else {
-                    $(item).html('<img class="lazyload" data-src="' +$(item).attr('data-thumb')+ '">');
+                    $(item).html('<img class="lazyload" data-src="' + $(item).attr('data-thumb') + '">');
                 }
             } else {
-                $(item).html('<img src="' +$(item).attr('data-thumb')+ '">');
+                $(item).html('<img src="' + $(item).attr('data-thumb') + '">');
             }
         });
     },
@@ -109,7 +109,7 @@ var VOID_Content = {
         $.each($('.yue pre code'), function (i, item) {
             var classStr = $(item).attr('class');
 
-            if (typeof(classStr) == 'undefined') {
+            if (typeof (classStr) == 'undefined') {
                 classStr = 'language-none';
             }
 
@@ -119,13 +119,13 @@ var VOID_Content = {
 
             $(item).attr('class', classStr);
         });
-        
+
         Prism.highlightAll();
     },
 
     bigfoot: function () {
         // 初始化注脚
-        $.bigfoot({ actionOriginalFN: 'ignore' });
+        $.bigfoot({actionOriginalFN: 'ignore'});
     },
 
     pangu: function () {
@@ -135,13 +135,13 @@ var VOID_Content = {
     math: function () {
         if (VOIDConfig.enableMath && typeof MathJax !== 'undefined') {
             MathJax.Hub.Config({
-                tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+                tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
             });
             MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
         }
     },
 
-    hyphenate: function() {
+    hyphenate: function () {
         $('div.articleBody p, div.articleBody blockquote').hyphenate('en-us');
     }
 };
@@ -167,7 +167,7 @@ var VOID = {
         VOID_Content.bigfoot();
         VOID_Content.math();
         VOID_Content.hyphenate();
-        
+
         VOID_Vote.reload();
         AjaxComment.init();
 
@@ -208,7 +208,7 @@ var VOID = {
 
         VOID_Ui.MasonryCtrler.init();
         VOID_Ui.lazyload();
-        
+
         VOID_Ui.checkScrollTop();
         VOID_Content.countWords();
         VOID_Content.parseTOC();
@@ -234,12 +234,12 @@ var VOID = {
                 maxHeight: '250px'
             });
         }
-        
+
         AjaxComment.init();
     },
 
     endPjax: function () {
-        if ($('.TOC').length < 1) {	
+        if ($('.TOC').length < 1) {
             TOC.close();
         }
     },
@@ -286,7 +286,7 @@ var VOID = {
             window.open(t, '_self');
         }
     },
-    
+
     enterSearch: function (item) {
         var event = window.event || arguments.callee.caller.arguments[0];
         if (event.keyCode == 13) {
@@ -339,18 +339,18 @@ var VOID_Vote = {
                     VOID_Util.setCookie(cookieName, voted, 3600 * 24 * 90);
                 }
                 switch (data.code) {
-                case 200:
-                    var prev = parseInt($(item).find('.value').text());
-                    $(item).find('.value').text(prev + 1);
-                    break;
-                case 302:
-                    VOID.alert('您好像已经投过票了呢～');
-                    break;
-                case 403:
-                    VOID.alert('暂不支持更改投票哦～');
-                    break;
-                default:
-                    break;
+                    case 200:
+                        var prev = parseInt($(item).find('.value').text());
+                        $(item).find('.value').text(prev + 1);
+                        break;
+                    case 302:
+                        VOID.alert('您好像已经投过票了呢～');
+                        break;
+                    case 403:
+                        VOID.alert('暂不支持更改投票哦～');
+                        break;
+                    default:
+                        break;
                 }
             },
             error: function () {
@@ -380,7 +380,7 @@ var VOID_Vote = {
     },
 
     toggleFoldComment: function (coid, item) {
-        var sel = '#comment-'+String(coid);
+        var sel = '#comment-' + String(coid);
         $(sel).toggleClass('fold');
         if ($(sel).hasClass('fold')) {
             $(item).text('点击展开');
@@ -405,15 +405,15 @@ var Share = {
 
     toWeibo: function (item) {
         var content = Share.parseItem(item);
-        var url = 'http://service.weibo.com/share/share.php?appkey=&title=分享《'+ content.title + '》 @' + content.weibo + '%0a%0a' + content.excerpt
-            +'&url='+content.url
-            +'&pic='+content.img+'&searchPic=false&style=simple';
+        var url = 'http://service.weibo.com/share/share.php?appkey=&title=分享《' + content.title + '》 @' + content.weibo + '%0a%0a' + content.excerpt
+            + '&url=' + content.url
+            + '&pic=' + content.img + '&searchPic=false&style=simple';
         window.open(url);
     },
 
     toTwitter: function (item) {
         var content = Share.parseItem(item);
-        var url = 'https://twitter.com/intent/tweet?text=分享《'+ content.title + '》 @' + content.twitter + '%0a%0a' + content.excerpt
+        var url = 'https://twitter.com/intent/tweet?text=分享《' + content.title + '》 @' + content.twitter + '%0a%0a' + content.excerpt
             + '%20' + content.url;
         window.open(url);
     }
@@ -497,7 +497,7 @@ var AjaxComment = {
                     }
                 }
 
-                if ($(AjaxComment.commentForm).find('#url').val() == '' 
+                if ($(AjaxComment.commentForm).find('#url').val() == ''
                     && typeof $(AjaxComment.commentForm).find('#url').attr('required') != 'undefined') {
                     VOID.alert(AjaxComment.noUrl);
                     AjaxComment.err();
@@ -566,8 +566,7 @@ var AjaxComment = {
                                     if ($('#' + AjaxComment.parentID + ' > .comment-children').length > 0) {
                                         // 父评论已有子评论，插入到子评论列表头部
                                         $('#' + AjaxComment.parentID + ' > .comment-children > .comment-list').prepend(newCommentData);
-                                    }
-                                    else {
+                                    } else {
                                         // 父评论没有子评论，新建一层包裹
                                         newCommentData = '<div class="comment-children"><div class="comment-list">' + newCommentData + '</div></div>';
                                         $('#' + AjaxComment.parentID).append(newCommentData);
@@ -600,12 +599,12 @@ var AjaxComment = {
             $(document).on('pjax:send', function () {
                 VOID.beforePjax();
             });
-    
+
             $(document).on('pjax:complete', function () {
                 VOID.afterPjax();
             });
-    
-            $(document).on('pjax:end', function () {	
+
+            $(document).on('pjax:end', function () {
                 VOID.endPjax();
             });
         }

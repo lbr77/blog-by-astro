@@ -33,7 +33,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
         // 颜色主题 0 => 自动切换,1=>日间模式,2=>夜间模式
         colorScheme: 0,
         // 首页板式 0 => 单栏 1 => 双栏
-        indexStyle: 1,
+        indexStyle: 0,
         // 打赏二维码
         reward: "",
         //文章内容使用衬线体
@@ -73,24 +73,24 @@ export const THEME_CONFIG: App.Locals['config'] = {
         // 由 Google Fonts 提供支持，可能延长页面加载时间
         useFiraCodeFont: true,
         // 在图片下方显示图题
-        parseFigcaption:false,
+        parseFigcaption: false,
         // 社交 ID，用于生成分享链接
         twitterId: "0x88ffa357",
         // 夜间模式时间段
-        darkModeTime : {
+        darkModeTime: {
             start: 22.5,  // 晚 22 点 30 分开始
             end: 7.0      // 直到早 6 点 59 分
         },
         // 当操作系统为深色主题时主题颜色自动切换，仅在 macOS 10.14.4 及以上版本的 Safari 中可用
-        followSystemColorScheme : true,
+        followSystemColorScheme: true,
         //大图集
-        largePhotoSet:true,
+        largePhotoSet: true,
         // 浏览器原生懒加载（使用img标签新增的loading="lazy"属性实现）
         // 为图片提供更好的SEO支持。只适配较新版本的浏览器，不支持的浏览器将自动加载当前页面下的所有图片
         // 浏览器具体适配情况请参考：https://caniuse.com/loading-lazy-attr
         // 注意：开启后将使得模糊懒加载功能失效
         browserLevelLoadingLazy: false,
-        macStyleCodeBlock:false,
+        macStyleCodeBlock: false,
         // 代码行数显示
         lineNumbers: true,
         // 自定义添加社交链接

@@ -1,0 +1,144 @@
+---
+import "../styles/VOID.scss";
+import {SEO} from "astro-seo";
+import {getImage} from "astro:assets";
+import getUA from "../utils/UA_Identify";
+import Navbar from "../components/Navbar.astro";
+import Ldjson from "../components/Ldjson.astro";
+import Banner from "../components/Banner.astro";
+import Footer from "../components/Footer.astro";
+import {ImageMetadata} from "astro";
+interface Props {
+    title?: string;
+    desc?: string;
+    banner?: ImageMetadata;
+}
+
+const props = Astro.props;
+
+const siteConfig = Astro.locals.config.siteConfig;
+const themeConfig = Astro.locals.config.themeConfig;
+const title = props.title ?? siteConfig.title;
+const desc = props.desc ?? siteConfig.desc;
+const canonical = siteConfig.website;
+const image =
+    props.banner &&
+    (await getImage(props.banner));
+
+const optimizedImage = new URL(image?.src ?? "/placeholder.png", Astro.url).toString();
+const feConfig = {
+    PJAX: themeConfig.pjax,
+    searchBase: "/search/", //如果能做出来的话
+    home: "/",
+    buildTime: new Date("2023-06-19").toISOString(),
+    enableMath: themeConfig.enableMath,
+    lazyload: themeConfig.lazyload,
+    colorScheme: themeConfig.colorScheme,
+    headerMode: themeConfig.headerMode,
+    followSystemColorScheme: themeConfig.followSystemColorScheme,
+    browserLevelLoadingLazy: themeConfig.browserLevelLoadingLazy,
+    VOIDPlugin: false,//显然是没有的
+    votePath: "/action/void?",//说不定能做出来呢
+    lightBg: "",
+    darkBg: "",
+    lineNumbers: themeConfig.lineNumbers,
+    darkModeTime: themeConfig.darkModeTime,
+    horizontalBg: false,
+    verticalBg: false,
+    indexStyle: themeConfig.indexStyle,
+    version: themeConfig.version,
+    isDev: true
+}
+let buildBodyClass = [];
+
+const cookies = Astro.cookies;
+if (themeConfig.colorScheme == 0) {
+    if (cookies.get("theme_dark")) {
+        if (cookies.get("theme_dark").value == "1") {
+            buildBodyClass.push("theme_dark");
+        }
+    }
+} else if (themeConfig.colorScheme == 2) {
+    buildBodyClass.push("theme-dark");
+}
+if (themeConfig.macStyleCodeBlock) {
+    buildBodyClass.push("macStyleCodeBlock");
+}
+if (themeConfig.lineNumbers) {
+    buildBodyClass.push("line-numbers");
+}
+if (themeConfig.serifincontent) {
+    buildBodyClass.push("serif");
+}
+if (themeConfig.indexStyle == 1) {
+    buildBodyClass.push("single-col");
+}
+if (themeConfig.bluredLazyload) {
+    buildBodyClass.push("bluredLazyload");
+}
+if (themeConfig.lazyload) {
+    buildBodyClass.push("lazyload-img");
+}
+buildBodyClass.push(getUA(Astro.request.headers));
+const url = Astro.url;
+---
+<!DOCTYPE HTML>
+<html>
+<head>
+    <SEO
+            charset="utf-8"
+            title={title}
+            description={desc}
+            extend={{
+                link: [{rel: "icon", type: "image/png", href: "/favicon.png"}],
+                meta: [
+                    {
+                        name: "twitter:image:src",
+                        content: optimizedImage,
+                    },
+                    {name: "twitter:creator", content: themeConfig.twitter},
+                    {name: "twitter:site", content: themeConfig.twitter},
+                    {name: "twitter:card", content: "summary_large_image"},
+                    {name: "twitter:title", content: title},
+                    {name: "twitter:description", content: desc},
+                ],
+            }}
+            openGraph={{
+                basic: {
+                    title: title,
+                    type: "article",
+                    image: optimizedImage,
+                    url: canonical,
+                },
+            }}
+    />
+    <script is:inline src="/assets/jquery.min.js"/>
+    <script is:inline src="/assets/bundle.js"/>
+    <script is:inline src="/assets/bundle-header.js"/>
+    <script data-config={JSON.stringify(feConfig)}>
+        const VOIDConfig = JSON.parse(document.currentScript.dataset.config);
+    </script>
+    <script is:inline src="/assets/header.js"/>
+    <!--这里添加你需要修改的内容哦！-->
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
+    {themeConfig.serifincontent &&
+            <link id="stylesheet_noto"
+                  href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,400,700&display=swap&subset=chinese-simplified"
+                  rel="stylesheet">}
+    {themeConfig.useFiraCodeFont &&
+            <>
+                <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+                <style>.yue code, .yue tt {
+                    font-family: "Fira Code", Menlo, Monaco, Consolas, "Courier New", monospace
+                }</style>
+            </>}
+</head>
+<body fontsize="3" class:list={buildBodyClass}>
+<Navbar/>
+<main id="pjax-container">
+    <slot/>
+</main>
+<Footer/>
+</body>
+</html>

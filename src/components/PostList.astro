@@ -1,3 +1,23 @@
 ---
-
+import {getCollection} from "astro:content";
+let posts = await getCollection("posts");
+posts.sort((a, b) => {
+    return b.data.date - a.data.date;
+});
+const nowPage = new URL(Astro.request.url).searchParams.get("p") || 1;
+const numPerPage = 12;
+posts = posts.slice((nowPage - 1) * numPerPage, nowPage * numPerPage);
+// console.log(posts)
+import PostCard from "./PostCard.astro";
+import PageController from "./PageController.astro";
 ---
+<section id="index-list" class="float-up">
+    <ul id="masonry">
+        {posts.map((post) => (
+                <PostCard post={post}/>
+        ))}
+    </ul>
+</section>
+<PageController nowPage={nowPage} prev=`<span aria-label="上一页">←</span>` splitPage=1
+                next=`<span aria-label="下一页">→</span>` splitWord="..."
+                template="wrapClass=pager&prevClass=prev&nextClass=next"/>

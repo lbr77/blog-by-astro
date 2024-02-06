@@ -1,0 +1,65 @@
+---
+const data = Astro.props.post;
+let generateClass = () => {
+    let ret = "masonry-item style-";
+    if (data.data.showFullContent == 1) {
+        if (data.data.bannerAsCover == 2) {
+            ret += "1";
+        }
+        ret += " full-content";
+    } else {
+        ret += `${data.data.bannerAsCover}`
+    }
+    return ret;
+};
+let formatCustomDate = (date) => {
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const daySuffix = ['TH', 'ST', 'ND', 'RD'];
+
+    const year = date.getFullYear();
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const suffix = (day >= 11 && day <= 13) ? 'TH' : daySuffix[day % 10] || 'TH';
+
+    return `${month} ${day}${suffix},${year} `;
+}
+let coundMarkdownWords = (markdownText) => {
+    // 移除Markdown中的标签
+    const textWithoutTags = markdownText.replace(/<[^>]*>/g, '');
+
+    // 使用空格分割文本并过滤空字符串，以计算单词数量
+    const words = textWithoutTags.split(/\s+/).filter(word => word !== '');
+
+    // 返回字数统计结果
+    return textWithoutTags.length;
+}
+---
+<li id={`p-${data.slug}`} class={generateClass()}>
+    <!--{ !data.data.showFullContent && }-->
+    <a href={`/posts/${data.slug}`}>
+        <article class="yue">
+            <div class="articleBody">
+                {data.data.banner != "" &&
+                        <div class="banner">
+                            <img class="lazyload browserlevel-lazy" loading="lazy" src={data.data.banner}
+                                 alt={data.title}/>
+                        </div>}
+                <div class="content-wrap">
+                    <div class="post-meta-index">
+                        <time datetime={data.data.date}>{formatCustomDate(data.data.date)}</time>
+                        <!--    Word Count TODO-->+
+                        <span class="word-count">{coundMarkdownWords(data.body)} 字</span>
+                    </div>
+                    <h1 class="title">{data.data.title}</h1>
+                    <!--{data.data.showFullContent==1 && <a href={`/posts/${data.slug}`}></a>}-->
+                    <div class="articleBody">
+                        <p>{data.data.excerpt}</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </a>
+</li>
+<script data-slug={data.slug}>
+    VOID_Ui.MasonryCtrler.watch(`p-${document.currentScript.dataset.slug}`);
+</script>

@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
+
 /* eslint-disable no-undef */
 
 function insertAtCursor(myField, myValue) {
@@ -28,11 +29,11 @@ function insertAtCursor(myField, myValue) {
     }
 
     myField.scrollTop = textTop;
-    document.documentElement.scrollTop=documentTop;
+    document.documentElement.scrollTop = documentTop;
 }
 
-$(function() {
-    if($('#wmd-button-row').length>0){
+$(function () {
+    if ($('#wmd-button-row').length > 0) {
         $('#wmd-button-row').append('<li class="wmd-spacer wmd-spacer1"></li><li class="wmd-button" id="wmd-photoset-button" style="" title="插入图集">图集</li>');
         $('#wmd-button-row').append('<li class="wmd-spacer wmd-spacer1"></li><li class="wmd-button" id="wmd-owo-button" style="" title="插入表情"><span style="width:unset" class="OwO"></span></li>');
         new OwO({
@@ -45,7 +46,7 @@ $(function() {
             maxHeight: '250px'
         });
     }
-    $(document).on('click','#wmd-photoset-button',function() {
+    $(document).on('click', '#wmd-photoset-button', function () {
         myField = document.getElementById('text');
         insertAtCursor(myField, '\n\n[photos]\n\n[/photos]\n\n');
     });

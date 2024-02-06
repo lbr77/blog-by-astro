@@ -1,20 +1,33 @@
 ---
 import {ImageMetadata} from "astro";
+import PostList from '../components/PostList.astro';
+import Banner from "../components/Banner.astro";
+import Ldjson from "../components/Ldjson.astro";
+const siteConfig = Astro.locals.config.siteConfig;
+const themeConfig = Astro.locals.config.themeConfig;
 interface Props {
     title?: string;
     desc?: string;
     banner?: ImageMetadata;
 }
 const props = Astro.props;
-const title = props.titile || Astro.locals.config.title;
-import Ldjson from "../components/Ldjson.astro";
-import Banner from "../components/Banner.astro";
+
+const title = props.title ?? siteConfig.title;
+// const title = props.titile || Astro.locals.config.title;
 const url = new URL(Astro.request.url);
+
+let builtclass = ["wrapper", "container"];
+if (themeConfig.indexStyle == 1) {
+    builtclass.push("narrow");
+} else {
+    builtclass.push("wide");
+}
 ---
-<main id="pjax-container">
-    <title hidden>
-        {title}
-    </title>
-    <Ldjson url={url} banner={props.banner}/>
-    <Banner banner="/banner.jpg"/>
-</main>
+<title hidden>
+    {title}
+</title>
+<Ldjson url={url} banner={props.banner}/>
+<Banner banner="/assets/banner.jpg" type="index" title={title} desc={siteConfig.desc}/>
+<div class:list={builtclass}>
+    <PostList/>
+</div>

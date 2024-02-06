@@ -20,19 +20,19 @@ const VOID_Util = {
     throttle: function (fn, delay, atleast) {
         var timer = null;
         var previous = null;
-    
+
         return function () {
             var now = +new Date();
-    
-            if ( !previous ) previous = now;
-    
-            if ( now - previous > atleast ) {
+
+            if (!previous) previous = now;
+
+            if (now - previous > atleast) {
                 fn();
                 // 重置上一次开始时间为本次结束时间
                 previous = now;
             } else {
                 clearTimeout(timer);
-                timer = setTimeout(function() {
+                timer = setTimeout(function () {
                     fn();
                 }, delay);
             }
@@ -91,7 +91,7 @@ const VOID_Lazyload = {
 
     addEventListener: function () {
         if (!VOID_Lazyload.finish()) {
-            window.addEventListener('scroll',VOID_Lazyload.eventHandler);
+            window.addEventListener('scroll', VOID_Lazyload.eventHandler);
         }
     },
 
@@ -104,8 +104,8 @@ const VOID_Lazyload = {
         var viewPortHeight = document.documentElement.clientHeight; //可见区域高度
         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop; //滚动条距离顶部高度
         var offset = 300; // 提前 200 px 加载
-        return $(item).offset().top - offset < viewPortHeight + scrollTop 
-                    && $(item).offset().top + $(item).height() + offset > scrollTop;
+        return $(item).offset().top - offset < viewPortHeight + scrollTop
+            && $(item).offset().top + $(item).height() + offset > scrollTop;
     },
 
     callback: function () {
@@ -145,7 +145,7 @@ const VOID_BrowserLoadingLazy = {
     loadedCallback: function (item) {
         $(item).addClass('loaded');
         $(item).parent().addClass('loaded');
-        setTimeout(function() {
+        setTimeout(function () {
             $(item).siblings('.remove-after').remove();
         }, 1000);
     },
@@ -201,9 +201,9 @@ const VOID_SmoothScroller = {
         } catch (err) {
             console.log(err);
         }
-        window.addEventListener('wheel', VOID_SmoothScroller.stop, 
-            passiveSupported ? { passive: false } : false);
-        
+        window.addEventListener('wheel', VOID_SmoothScroller.stop,
+            passiveSupported ? {passive: false} : false);
+
         window.addEventListener('mousedown', VOID_SmoothScroller.stop);
         window.addEventListener('touchstart', VOID_SmoothScroller.stop);
     },
@@ -216,18 +216,18 @@ const VOID_SmoothScroller = {
 
     scrollTo: function (target, offset) {
         if (target === null) return;
-        if (typeof(target) == 'object') {
+        if (typeof (target) == 'object') {
             target = target.getBoundingClientRect().top + document.documentElement.scrollTop;
-        } else if (typeof(target) == 'string') {
-            target = document.querySelector(target).getBoundingClientRect().top 
+        } else if (typeof (target) == 'string') {
+            target = document.querySelector(target).getBoundingClientRect().top
                 + document.documentElement.scrollTop;
         }
-        if (typeof(offset) == 'number') {
+        if (typeof (offset) == 'number') {
             target += offset;
         }
         // 若超出顶部或无法到达
         target = Math.max(target, 0);
-        target = Math.min(target, 
+        target = Math.min(target,
             document.documentElement.getBoundingClientRect().height - document.documentElement.clientHeight);
 
         VOID_SmoothScroller.addEventListener();
@@ -236,7 +236,7 @@ const VOID_SmoothScroller = {
     },
 
     stop: function (event) {
-        if (typeof(event) != 'undefined')
+        if (typeof (event) != 'undefined')
             event.preventDefault();
         VOID_SmoothScroller.scrollTo(document.documentElement.scrollTop);
     }
@@ -282,15 +282,14 @@ const VOID_Ui = {
         if ($(item).hasClass('pushed')) {
             $('#nav-mobile').fadeIn(200);
             VOID_Ui.openModal();
-        }
-        else {
+        } else {
             VOID_Ui.closeModal();
             $('#nav-mobile').fadeOut(200);
         }
     },
 
     toggleSettingPanel: function () {
-        if(!$('body').hasClass('setting-panel-show')) {
+        if (!$('body').hasClass('setting-panel-show')) {
             if ($('#login-panel').length)
                 $('#login-panel').removeClass('show');
             $('#setting-panel').show();
@@ -372,7 +371,7 @@ const VOID_Ui = {
     headroom: function () {
         if (VOIDConfig.headerMode == 0) {
             var header = document.querySelector('body>header');
-            var headroom = new Headroom(header, { offset: 60 });
+            var headroom = new Headroom(header, {offset: 60});
             headroom.init();
         }
     },
@@ -383,9 +382,8 @@ const VOID_Ui = {
             $(item).html('-');
             $(year).removeClass('shrink');
             var num = parseInt($(item).attr('data-num'));
-            $(year).css('max-height',  num * 49 + 'px');
-        }
-        else {
+            $(year).css('max-height', num * 49 + 'px');
+        } else {
             $(item).html('+');
             $(year).addClass('shrink');
             $(year).css('max-height', '0');
@@ -461,7 +459,7 @@ const VOID_Ui = {
             if (VOIDConfig.colorScheme != 0) {
                 return;
             }
-    
+
             if (VOIDConfig.followSystemColorScheme && VOID_Util.getPrefersDarkModeState()) { // 自动模式跟随系统
                 document.body.classList.add('theme-dark');
                 var night = VOID_Util.getCookie('theme_dark');
@@ -479,7 +477,7 @@ const VOID_Ui = {
                     sunrise = new Date(new Date().setHours(
                         Math.floor(VOIDConfig.darkModeTime.end),
                         60 * (VOIDConfig.darkModeTime.end - Math.floor(VOIDConfig.darkModeTime.end)), 0));
-        
+
                     var current = new Date();
                     // 格式化为小时
                     var sunset_s = VOIDConfig.darkModeTime.start;
@@ -509,7 +507,7 @@ const VOID_Ui = {
                 }
             }
         },
-    
+
         toggleByHand: function () {
             $('#toggle-night').addClass('switching');
             setTimeout(function () {
@@ -533,7 +531,7 @@ const VOID_Ui = {
         //     return;
         // },
 
-        start: function(e) {
+        start: function (e) {
             this.clientX = e.originalEvent.changedTouches[0].clientX;
             this.clientY = e.originalEvent.changedTouches[0].clientY;
         },
