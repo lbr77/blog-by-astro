@@ -17,9 +17,6 @@ export async function statics() {
 }
 export function getPostWords(markdownText) {
     const textWithoutTags = markdownText.replace(/<[^>]*>/g, '');
-
-    const words = textWithoutTags.split(/\s+/).filter(word => word !== '');
-
     return textWithoutTags.length;
 }
 
@@ -47,4 +44,17 @@ export async function buildByTags(){
         }
     }
     return Array.from(new Set(tags));
+}
+export async function buildByTag(){
+    let posts = await getCollection("posts");
+    let tags = {};
+    for(let post of posts){
+        for(let tag of post.data.tags){
+            if(!tags[tag]){
+                tags[tag] = [];
+            }
+            tags[tag].push(post);
+        }
+    }
+    return tags;
 }

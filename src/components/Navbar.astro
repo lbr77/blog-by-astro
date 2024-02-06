@@ -19,7 +19,7 @@ const tags = await buildByTags();
                     return <a href={item.link}>{item.text}</a>;
                 })
             }
-            <span class="dropdown">分类
+            <span class="dropdown"><a href="/category">分类</a>
                 <ul>
                     {tags.map((tag)=>(
                         <li>
