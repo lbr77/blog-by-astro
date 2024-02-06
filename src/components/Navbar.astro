@@ -1,7 +1,9 @@
 ---
+import {buildByTags} from "../utils/statistics";
 const themeConfig = Astro.locals.config.siteConfig;
 const title = themeConfig.title;
 const nav = themeConfig.navs;
+const tags = await buildByTags();
 ---
 <header class="header-mode-2">
     <div class="container wider">
@@ -19,7 +21,11 @@ const nav = themeConfig.navs;
             }
             <span class="dropdown">分类
                 <ul>
-                    <li>没做到这一步呢</li>
+                    {tags.map((tag)=>(
+                        <li>
+                            <a href={`/category/${tag}`}>{tag}</a>
+                        </li>
+                    ))}
                 </ul>
             </span>
             <!--search: WIP-->
