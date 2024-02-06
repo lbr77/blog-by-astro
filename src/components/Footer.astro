@@ -7,11 +7,21 @@ const themeConfig = Astro.locals.config.themeConfig;
     <footer>
         <div class="container wide">
             <section>
-                <p>© {new Date().getFullYear()} <span class="brand">{siteConfig.title}</span></p>
+                <p>© {new Date().getFullYear()}&#20;<span class="brand">{siteConfig.title}</span></p>
                 <p>感谢陪伴：<span id="uptime"></span></p>
+                <p><span id="hitokoto_text"></span></p>
             </section>
             <section>
                 <p>Proudly using <a href="https://astro.build">Astro</a> • <a href="https://blog.imalan.cn/archives/247/">Theme VOID</a></p>
+                <p>
+                    <a href="/feed/" rel="noopener" class="pjax">RSS 订阅</a>
+                    • <a href="/sitemap.xml" rel="noopener" class="pjax">站点地图</a>
+                    • <a href="/about/" rel="noopener" class="pjax">关于</a>
+                    • <a href="/friends" rel="noopener" class="pjax">友情链接</a>
+                </p>
+                <p>
+                    <a href="https://icp.gov.moe/">萌ICP备</a> 20240609号-1
+                </p>
             </section>
         </div>
     </footer>
@@ -49,12 +59,15 @@ const themeConfig = Astro.locals.config.themeConfig;
             <a target="_self" class="link" href="javascript:void(0)" onclick="VOID_Ui.toggleLoginForm()"><i class="voidicon-user"></i></a>
             <!--<a class="link" title="RSS" target="_blank" href="/feed.xml"><i class="voidicon-rss"></i></a>-->
         </section>
+        <section id="login-panel">
+
+        </section>
         <!--    TODO 友情链接系统 -->
     </aside>
     <!--{themeConfig.serviceWorker != "" && } 跳过serviceworker了这个是最后再搞的东西xxx-->
     {themeConfig.enableMath &&  <script is:inline src="/assets/libs/mathjax/2.7.4/MathJax.js"/>}
     <script is:inline src="/assets/VOID.js"/>
-    <script is:inline>
+    <script is:inline data-reloadfunc={themeConfig.pjaxreload}>
         if($(".OwO").length > 0){ //似乎是评论系统的表情包但是评论系统我用不上啊
             new OwO({
                 logo: 'OωO',
@@ -66,11 +79,15 @@ const themeConfig = Astro.locals.config.themeConfig;
                 maxHeight: '250px'
             });
         }
-    </script>
-    <script is:inline data-reloadfunc={themeConfig.pjaxreload}>
         $(document).on('pjax:complete',function(){
             eval(document.currentScript.dataset.reloadfunc);//额非常无语的写法
         })
+        //Hitokoto
+        fetch("https://v1.hitokoto.cn")
+            .then(response => response.json())
+            .then(data => {
+                $("#hitokoto_text")[0].innerText = `${data.hitokoto} —— ${data.from}`;
+            });
         //     EXSearch,pass.
     </script>
 <!--    这里放自定义的footer内容哦！  -->
