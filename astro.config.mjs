@@ -1,10 +1,10 @@
-import {defineConfig} from 'astro/config';
+import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import {THEME_CONFIG} from "./src/theme.config";
+import { THEME_CONFIG } from "./src/theme.config";
+import mdx from "@astrojs/mdx";
+
 // https://astro.build/config
 export default defineConfig({
-    output: "server",
-    integrations: [
-        react()
-    ],
+  output: "server",
+  integrations: [react(), mdx()]
 });

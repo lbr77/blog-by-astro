@@ -1,16 +1,20 @@
 ---
-import LayoutDefault from "../../layouts/LayoutDefault.astro";
-import Banner from "../../components/Banner.astro";
-import {getEntry} from 'astro:content';
-import Ldjson from "../../components/Ldjson.astro";
+import {getCollection} from "astro:content";
+import {getEntry} from "astro:content";
+import LayoutDefault from "../layouts/LayoutDefault.astro";
+import Banner from "../components/Banner.astro";
+import Ldjson from "../components/Ldjson.astro";
+import Layout404 from "../layouts/Layout404.astro";
+// 其他的页面（使用mdx）和这个模板。
 const slug = Astro.params.slug;
-const blog = await getEntry("posts", slug);
+const blog = await getEntry("pages", slug);
 if(blog){
-    const {Content, headings} = await blog.render();
+    const {Content} = await blog.render();
 }
+const siteConfig = Astro.locals.config.siteConfig;
 const themeConfig = Astro.locals.config.themeConfig;
 ---
-{blog && <LayoutDefault>
+{blog && <LayoutDefault title={blog.data.title}>
     <Ldjson url={new URL(Astro.request.url)} banner={blog.data.banner}/>
     <Banner banner={blog.data.banner} type="post" bannerStyle={blog.data.bannerStyle} title={blog.data.title}
             desc={blog.data.excerpt}/>

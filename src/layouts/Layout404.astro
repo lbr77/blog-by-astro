@@ -1,0 +1,14 @@
+---
+import Banner from "../components/Banner.astro";
+const siteConfig = Astro.locals.config.siteConfig;
+const themeConfig = Astro.locals.config.themeConfig;
+---
+<title hidden>
+    {themeConfig.title}
+</title>
+<Banner banner="/assets/banner.jpg" type="index" title={"找不到惹"} desc={"404"}/>
+<style>
+    main {background: #000}
+    footer {display:none}
+    body {overflow: hidden}
+</style>
