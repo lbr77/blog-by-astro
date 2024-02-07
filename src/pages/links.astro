@@ -1,0 +1,12 @@
+---
+import LayoutDefault from "../layouts/LayoutDefault.astro";
+import {getAllLinks} from "../utils/notion/links";
+import LayoutLinks from "../layouts/LayoutLinks.astro";
+const links = await getAllLinks();
+const title = "友情链接";
+const description = "朋友们";
+const banner = "/assets/banner.jpg";
+---
+<LayoutDefault>
+    <LayoutLinks title={title} subtitle={description} banner={banner} links={links}/>
+</LayoutDefault>

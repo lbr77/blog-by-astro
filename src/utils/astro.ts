@@ -1,4 +1,5 @@
 import {getCollection} from "astro:content";
+//所有对astro的调用封装。以后可能会换成notion！
 export async function statics() {
   const posts = await getCollection("posts");
   let cate = [];
@@ -19,7 +20,6 @@ export function getPostWords(markdownText) {
     const textWithoutTags = markdownText.replace(/<[^>]*>/g, '');
     return textWithoutTags.length;
 }
-
 export async function buildByYear(){
     let posts = await getCollection("posts");
     posts = posts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
@@ -33,8 +33,6 @@ export async function buildByYear(){
     }
     return years;
 }
-
-
 export async function buildByTags(){
     let posts = await getCollection("posts");
     let tags = [];
@@ -57,4 +55,25 @@ export async function buildByTag(){
         }
     }
     return tags;
+}
+export async function buildByCategory(category,page=1,limit=12){
+    let posts = await getCollection("posts").then(
+        (posts)=>{
+            posts.sort((a, b) => {
+                return b.data.date - a.data.date;
+            });
+            return posts;
+        }
+    ).then((posts)=>{
+        if(category) {
+            posts = posts.filter((post) => {
+                return post.data.tags.find((tag)=>tag==category) != undefined;
+            });
+        }
+        return posts;
+    }).then((posts)=>{
+        posts = posts.slice((page - 1) * limit, page * limit);
+        return posts;
+    })
+    return posts;
 }

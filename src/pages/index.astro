@@ -1,9 +1,17 @@
 ---
+import {buildByCategory} from "../utils/astro";
 import LayoutDefault from '../layouts/LayoutDefault.astro';
 import LayoutIndex from '../layouts/LayoutIndex.astro';
+import Layout404 from "../layouts/Layout404.astro";
+import {getPosts} from "../utils/notion/posts";
+const nowPage = parseInt(new URL(Astro.request.url).searchParams.get("p") || "1");
+const numPerPage = 12;
+// const posts = await buildByCategory("", nowPage,numPerPage);
+const posts = await getPosts(numPerPage,nowPage);
+const lenposts = posts.length;
 ---
 
-<LayoutDefault>
-    <LayoutIndex/>
-</LayoutDefault>
-
+{lenposts != 0 ? <LayoutDefault>
+    <LayoutIndex posts={posts} nowPage={nowPage}/>
+</LayoutDefault>:<LayoutDefault title={"找不到惹！"}> <Layout404/></LayoutDefault>
+    }

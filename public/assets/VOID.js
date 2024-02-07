@@ -327,7 +327,7 @@ var VOID_Vote = {
             url: VOIDConfig.votePath + table,
             type: 'POST',
             data: JSON.stringify({
-                'id': parseInt(id),
+                'id': id,
                 'type': type
             }),
             contentType: 'application/json; charset=utf-8',

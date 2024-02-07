@@ -1,3 +1,17 @@
+export const util = (url: URL) => {
+    const path = url.pathname;
+    if (path === '/') {
+        return "index";
+    }
+    if (path.startsWith("/posts")) {
+        return "post";
+    }
+    if (path.startsWith("/archive")) {
+        return "archive";
+    }
+    return "page";
+}
+
 export default function getUA(header: Headers) {
     let ret = "";
     if (header.get("X_WAP_PROFILE")) {

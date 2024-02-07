@@ -1,11 +1,11 @@
 ---
-import {buildByTag} from "../utils/statistics";
+import {buildByTag} from "../utils/astro";
 const posts = await buildByTag();
 ---
 <section id="archive-list" class="yue float-up">
     {Object.keys(posts).map((tag)=>(
         <>
-            <h2>{tag}<span class="num-posts">{`${posts[tag].length}篇`}</span>
+            <h2><a href={`/category/${tag}`}>{tag}</a><span class="num-posts">{`${posts[tag].length}篇`}</span>
                 <a no-pjax data-year={tag} data-num={posts[tag].length} class="toggle-archive" href="javascript:void(0);" onclick="VOID_Ui.toggleArchive(this); return false;">-</a></h2>
             <section id={`year-${tag}`} class="year shrink" style="max-height: 0px; transition-duration: 0.03s">
                 <ul>

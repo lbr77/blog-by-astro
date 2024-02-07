@@ -10,7 +10,6 @@ if(blog){
     const {Content} = await blog.render();
 }
 ---
-{blog && <LayoutDefault title={blog.data.title}>
+{blog ? <LayoutDefault title={blog.data.title}>
     <NormalPageLayout content={blog}/>
-</LayoutDefault>}
-{!blog && <LayoutDefault title={"找不到惹！"}> <Layout404/></LayoutDefault>}
+</LayoutDefault>:<LayoutDefault title={"找不到惹！"}> <Layout404/></LayoutDefault>}

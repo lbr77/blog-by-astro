@@ -1,19 +1,14 @@
 ---
+import {getWordCount} from "../utils/notion/posts";
 const data = Astro.props.post;
-import {getPostWords} from "../utils/statistics";
+import {getPostWords} from "../utils/astro";
 let generateClass = () => {
     let ret = "masonry-item style-";
-    if (data.data.showFullContent == 1) {
-        if (data.data.bannerAsCover == 2) {
-            ret += "1";
-        }
-        ret += " full-content";
-    } else {
-        ret += `${data.data.bannerAsCover}`
-    }
+    ret += `${data.bannerAsCover}`
     return ret;
 };
 let formatCustomDate = (date) => {
+    date = new Date(date);
     const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
     const daySuffix = ['TH', 'ST', 'ND', 'RD'];
 
@@ -27,25 +22,24 @@ let formatCustomDate = (date) => {
 
 ---
 <li id={`p-${data.slug}`} class={generateClass()}>
-    <!--{ !data.data.showFullContent && }-->
     <a href={`/posts/${data.slug}`}>
         <article class="yue">
             <div class="articleBody">
-                {data.data.banner != "" &&
+                {data.banner != "" &&
                         <div class="banner">
-                            <img class="lazyload browserlevel-lazy" loading="lazy" src={data.data.banner}
+                            <img class="lazyload browserlevel-lazy" loading="lazy" src={data.banner}
                                  alt={data.title}/>
                         </div>}
                 <div class="content-wrap">
                     <div class="post-meta-index">
-                        <time datetime={data.data.date}>{formatCustomDate(data.data.date)}</time>
-                        <!--    Word Count TODO-->+
-                        <span class="word-count">{getPostWords(data.body)} 字</span>
+                        <time datetime={data.createdAt}>{formatCustomDate(data.createdAt)}</time>
+                        <!--    Word Count TODO-->
+                        <span class="word-count">{getWordCount(data.id)} 字</span>
                     </div>
-                    <h1 class="title">{data.data.title}</h1>
+                    <h1 class="title">{data.title}</h1>
                     <!--{data.data.showFullContent==1 && <a href={`/posts/${data.slug}`}></a>}-->
                     <div class="articleBody">
-                        <p>{data.data.excerpt}</p>
+                        <p>{data.excerpt}</p>
                     </div>
                 </div>
             </div>

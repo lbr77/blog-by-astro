@@ -1,0 +1,11 @@
+---
+const slug = Astro.props.slug;
+---
+<div id="tcomment"></div>
+<script is:inline src="https://cdn.staticfile.org/twikoo/1.6.31/twikoo.all.min.js" />
+<script is:inline>
+    twikoo.init({
+        envId: "https://comment.nvme0n1p.dev/.netlify/functions/twikoo",
+        el: "#tcomment",
+    })
+</script>

@@ -1,6 +1,5 @@
 ---
-import {getCollection} from "astro:content";
-let posts = await getCollection("posts");
+let posts = Astro.props.posts;
 const totPage = parseInt((posts.length / 12).toString()) + 1;
 interface Props {
     template?: string,
@@ -14,6 +13,7 @@ const t = Astro.props;
 let r = [];
 const from = Math.max(1, parseInt(t.nowPage) - parseInt(t.splitPage));
 const to = Math.min(totPage, parseInt(t.nowPage) + parseInt(t.splitPage));
+// console.log(from,to)
 ---
 <ol class="pager">
     {t.nowPage != "1" &&

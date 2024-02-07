@@ -18,7 +18,7 @@ const themeConfig = Astro.locals.config.themeConfig;
                     <a href="/feed/" rel="noopener" class="pjax">RSS 订阅</a>
                     • <a href="/sitemap.xml" rel="noopener" class="pjax">站点地图</a>
                     • <a href="/about/" rel="noopener" class="pjax">关于</a>
-                    • <a href="/friends" rel="noopener" class="pjax">友情链接</a>
+                    • <a href="/links" rel="noopener" class="pjax">友情链接</a>
                 </p>
                 <p>
                     <a href="https://icp.gov.moe/">萌ICP备</a> 20240609号-1
@@ -89,9 +89,12 @@ const themeConfig = Astro.locals.config.themeConfig;
                 maxHeight: '250px'
             });
         }
-        $(document).on('pjax:complete', function () {
-            eval(document.currentScript.dataset.reloadfunc);//额非常无语的写法
-        })
+        const func = document.currentScript.dataset.reloadfunc;
+        if(func){
+            $(document).on('pjax:complete', function () {
+                eval(func);//额非常无语的写法
+            })
+        }
         //Hitokoto
         fetch("https://v1.hitokoto.cn")
             .then(response => response.json())

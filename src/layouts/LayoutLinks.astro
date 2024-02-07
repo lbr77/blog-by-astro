@@ -1,30 +1,26 @@
 ---
 import Ldjson from "../components/Ldjson.astro";
 import Banner from "../components/Banner.astro";
-import ArchiveList from "../components/ArchiveList.astro";
-import {statics} from "../utils/astro";
+import PostList from "../components/PostList.astro";
+import Friends from "../components/Friends.astro";
 const title = Astro.props.title;
+const subtitle = Astro.props.subtitle;
+const banner = Astro.props.banner;
 const url = new URL(Astro.request.url);
+let builtclass = ["wrapper", "container"];
 const siteConfig = Astro.locals.config.siteConfig;
 const themeConfig = Astro.locals.config.themeConfig;
-let builtclass = ["wrapper", "container"];
 if (themeConfig.indexStyle == 1) {
     builtclass.push("narrow");
 } else {
     builtclass.push("wide");
 }
-const subTitle = Astro.props.subtitle;
-const postsByYear = Astro.props.postsByyear;
 ---
 <title hidden>
     {title}
 </title>
-<Ldjson url={url} banner={"/assets/banner.jpg"}/>
-<Banner
-        banner="/assets/banner.jpg"
-        type="index"
-        title={title}
-        desc={subTitle}/>
+<Ldjson url={url} banner={banner}/>
+<Banner banner="/assets/banner.jpg" type="index" title={title} desc={subtitle}/>
 <div class:list={builtclass}>
-    <ArchiveList postsByYear={postsByYear}/>
+    <Friends links={Astro.props.links}/>
 </div>

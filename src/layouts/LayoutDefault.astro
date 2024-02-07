@@ -2,7 +2,7 @@
 import "../styles/VOID.scss";
 import {SEO} from "astro-seo";
 import {getImage} from "astro:assets";
-import getUA from "../utils/UA_Identify";
+import getUA from "../utils/util";
 import Navbar from "../components/Navbar.astro";
 import Ldjson from "../components/Ldjson.astro";
 import Banner from "../components/Banner.astro";
@@ -113,8 +113,8 @@ const url = Astro.url;
             }}
     />
     <script is:inline src="/assets/jquery.min.js"/>
-    <script is:inline src="/assets/bundle.js"/>
     <script is:inline src="/assets/bundle-header.js"/>
+    <script is:inline src="/assets/bundle.js"/>
     <script data-config={JSON.stringify(feConfig)}>
         const VOIDConfig = JSON.parse(document.currentScript.dataset.config);
     </script>

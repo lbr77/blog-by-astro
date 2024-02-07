@@ -1,6 +1,6 @@
 ---
 import {ImageMetadata} from "astro";
-import {getType} from "../utils/typegen.ts";
+import {util} from "../utils/util.ts";
 interface Props {
     url: URL;
     banner: ImageMetadata
@@ -10,7 +10,7 @@ const banner = Astro.props.banner || {src: "/banner.png"};
 const config = Astro.locals.config.siteConfig;
 
 const generateLD = (url: URL) => {
-    const types = getType(url);
+    const types = util(url);
     if (types === "index") {
         return {
             "@context": "https://schema.org",
@@ -109,7 +109,7 @@ const generateLD = (url: URL) => {
 
 <script id="ld-data" type="application/ld+json"></script>
 <script data-ld={JSON.stringify(generateLD(url))}>
-    const ld = document.currentScript.dataset.ld;
+    let ld = document.currentScript.dataset.ld;
     document.getElementById('ld-data').innerText = ld;
 </script>
 

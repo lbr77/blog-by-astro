@@ -1,7 +1,9 @@
 header {
   z-index: 3;
   position: fixed;
-
+  &.header-mode-1 {
+    position: fixed;
+  }
   &.header-mode-2 {
     position: absolute;
   }

@@ -1,11 +1,12 @@
 ---
-import {buildByTags} from "../utils/statistics";
+import {getAllTags} from "../utils/notion/posts";
 const themeConfig = Astro.locals.config.siteConfig;
 const title = themeConfig.title;
 const nav = themeConfig.navs;
-const tags = await buildByTags();
+const tags = await getAllTags();
 ---
 <header class="header-mode-2">
+    <!--TODO bugfix,header mode 1-->
     <div class="container wider">
         <nav>
             <a role=button aria-label="展开导航" class="toggle" target="_self" href="javascript:void(0);"
@@ -19,7 +20,7 @@ const tags = await buildByTags();
                     return <a href={item.link}>{item.text}</a>;
                 })
             }
-            <span class="dropdown"><a href="/category">分类</a>
+            <span class="dropdown">分类
                 <ul>
                     {tags.map((tag)=>(
                         <li>

@@ -1,9 +1,18 @@
 ---
 import LayoutCategory from "../../layouts/LayoutCategory.astro";
 import LayoutDefault from "../../layouts/LayoutDefault.astro";
+import {buildByCategory} from "../../utils/astro";
+import Layout404 from "../../layouts/Layout404.astro";
+import {getPostsByTag} from "../../utils/notion/posts";
 const {slug} = Astro.params;
-const title = `分类 ${slug} 下的文章`;
+const title = `分类 "${slug}" 下的文章`;
+const nowPage = parseInt(new URL(Astro.request.url).searchParams.get("p") || "1");
+const numPerPage = 12;
+const posts = await getPostsByTag(slug, numPerPage,nowPage);
+const lenposts = posts.length;
 ---
-<LayoutDefault title={title}>
-    <LayoutCategory category={slug} title={title} />
-</LayoutDefault>
+
+{lenposts != 0 ?
+<LayoutDefault title={title}><LayoutCategory category={slug} title={title} nowPage={nowPage} posts={posts}/></LayoutDefault>
+    :
+<LayoutDefault title={"找不到诶！"}> <Layout404/></LayoutDefault>}

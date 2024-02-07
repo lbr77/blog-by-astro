@@ -6,7 +6,6 @@ import Layout404 from "../../layouts/Layout404.astro";
 const slug = Astro.params.slug;
 const blog = await getEntry("posts", slug);
 ---
-{blog && <LayoutDefault>
+{blog ? <LayoutDefault>
 <PostLayout content={blog}/>
-</LayoutDefault>}
-{!blog && <LayoutDefault title={"找不到惹！"}> <Layout404/></LayoutDefault>}
+</LayoutDefault>:<LayoutDefault title={"找不到惹！"}> <Layout404/></LayoutDefault>}
