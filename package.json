@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/check": "^0.4.1",
     "@astrojs/mdx": "^2.1.1",
+    "@astrojs/prism": "^3.0.0",
     "@astrojs/react": "^3.0.9",
     "@astrojs/rss": "^4.0.4",
     "@astrojs/sitemap": "^3.0.5",
@@ -30,12 +31,19 @@
     "fizzy-ui-utils": "^3.0.0",
     "get-size": "^3.0.0",
     "jquery": "^3.7.1",
+    "katex": "^0.16.9",
+    "mermaid": "^10.8.0",
+    "metascraper": "^5.43.4",
+    "metascraper-description": "^5.43.4",
+    "metascraper-image": "^5.43.4",
+    "metascraper-title": "^5.43.4",
+    "node-fetch": "^3.3.2",
     "notion-client": "^6.16.0",
     "notion-compat": "^6.16.0",
     "outlayer": "^2.1.1",
+    "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-notion": "^0.10.0",
     "react-notion-x": "^6.16.0",
     "redis": "^4.6.13",
     "sha256": "^0.2.0",
@@ -43,6 +51,9 @@
     "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "@types/katex": "^0.16.7",
+    "@types/prismjs": "^1.26.3",
+    "@types/react": "^18.2.55",
     "sass": "^1.70.0"
   }
 }

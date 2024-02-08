@@ -29,15 +29,7 @@ const tags = await getAllTags();
                     ))}
                 </ul>
             </span>
-            <!--search: WIP-->
-            <span class="hidden-xs search-form-desktop">
-                <label for="search">搜索</label>
-                <input onkeydown="VOID.enterSearch(this);" type="text" name="search-content" id="search" required/>
-            </span>
-            <a class="search-form-input" style="display:flex"
-               role=button aria-label="展开搜索" id="toggle-mobile-search" target="_self"
-               href="javascript:void(0);"
-               onclick="VOID_Ui.toggleSearch(this);">
+            <a class="search-form-input" style="display:flex" role=button aria-label="展开搜索" id="toggle-mobile-search" target="_self" href="javascript:void(0);" onclick>
                 <i class="voidicon-search"></i>
             </a>
             <a target="_self" href="javascript:void(0);" id="toggle-setting" onclick="VOID_Ui.toggleSettingPanel();"><i

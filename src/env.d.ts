@@ -17,6 +17,7 @@ declare namespace App {
                 }[];
             };
             themeConfig: {
+                twikooEnvId: string;
                 defaultBanner: string;
                 indexBannerTitle: string;
                 indexBannerSubtitle: string;

@@ -1,0 +1,11 @@
+---
+
+let { block } = Astro.props;
+let imgSrc = "";
+
+if (block.options != null && "url" in block.options) {
+    imgSrc = block.options.url;
+}
+---
+
+<img src={imgSrc} alt="image" class="my-8" />

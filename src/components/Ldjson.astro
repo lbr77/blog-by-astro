@@ -109,7 +109,5 @@ const generateLD = (url: URL) => {
 
 <script id="ld-data" type="application/ld+json"></script>
 <script data-ld={JSON.stringify(generateLD(url))}>
-    let ld = document.currentScript.dataset.ld;
-    document.getElementById('ld-data').innerText = ld;
+    document.getElementById('ld-data').innerText =  document.currentScript.dataset.ld;
 </script>
-

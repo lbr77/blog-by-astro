@@ -1,0 +1,40 @@
+---
+
+let { blocks } = Astro.props;
+
+function contentLoop(blocks) {
+    let htmlString = "";
+
+    for (const block of blocks) {
+        let olType = ["1", "decimal"];
+
+        if (block.children_level == 0) {
+            olType = ["1", "decimal"];
+        } else if (block.children_level == 1) {
+            olType = ["a", "lower-alpha"];
+        } else if (block.children_level == 2) {
+            olType = ["i", "lower-roman"];
+        }
+
+        htmlString += `<li class="pl-3.5 ml-5">${block.text}</li>`;
+
+        if (block.children.length > 0) {
+            htmlString += `
+        <ol
+          type="${olType[0]}"
+          role="list"
+          class="text-xl ml-10"
+          style="list-style: ${olType[1]}"
+        >
+          ${contentLoop(block.children)}
+        </ol>
+      `;
+        }
+    }
+    return htmlString;
+}
+
+let rawHtmlString = contentLoop(blocks);
+---
+
+<ol role="list" class="list-decimal text-xl mb-4" set:html={rawHtmlString} />

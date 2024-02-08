@@ -1,20 +1,32 @@
 ---
 import Banner from "../components/Banner.astro"
 import Ldjson from "../components/Ldjson.astro";
-import Posts from "../components/Posts.astro";
+import Posts from "../components/PostFrame.astro";
 import Comments from "../components/Comments.astro";
+
 const blog = Astro.props.content;
+const desc = `${new Date(blog.createdAt).toISOString().split("T")[0]} · <span id="twikoo_comments">0</span>评论 · <span id="twikoo_visitors">0</span>阅读`;
+const twikooEnv = Astro.locals.config.themeConfig.twikooEnvId;
 ---
-<Ldjson url={new URL(Astro.request.url)} banner={blog.data.banner}/>
-<Banner banner={blog.data.banner} type="post" bannerStyle={blog.data.bannerStyle} title={blog.data.title}
-        desc={blog.data.excerpt}/>
+<Ldjson url={new URL(Astro.request.url)} banner={blog.banner}/>
+<Banner banner={blog.banner} type="post" bannerStyle={blog.bannerStyle} title={blog.title}
+        desc={desc}/>
+<script is:inline data-twikoo={twikooEnv}>
+    twikoo.getCommentsCount(
+        {envId: document.currentScript.dataset.twikoo, urls: [location.href],includeReply: true},
+    ).then((res)=>{
+        $("#twikoo_comments").text(res[0].commentsCount)
+    }).catch((err)=>{
+        console.error(err);
+    })
+</script>
 <div class="wrapper container">
     <div class="contents-wrap">
         <section id="post" class="float-up">
-            <Posts content={blog}/>
+            <Posts blog={blog}/>
         </section>
 
-        <Comments content={blog}/>
+        <Comments/>
     </div>
     <div class="toc-mask" onclick="TOC.close();"></div>
     <div aria-label="文章目录" class="TOC"></div>

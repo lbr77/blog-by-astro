@@ -1,0 +1,84 @@
+---
+import Paragraph from "./notion_blocks/paragraph.astro";
+import Heading1 from "./notion_blocks/heading_1.astro";
+import Heading2 from "./notion_blocks/heading_2.astro";
+import Heading3 from "./notion_blocks/heading_3.astro";
+import BulletedList from "./notion_blocks/bulleted_list.astro";
+import NumberedList from "./notion_blocks/numbered_list.astro";
+import Toggle from "./notion_blocks/toggle.astro";
+import Quote from "./notion_blocks/quote.astro";
+import Callout from "./notion_blocks/callout.astro";
+import Code from "./notion_blocks/code.astro";
+import Image from "./notion_blocks/image.astro";
+import Equation from "./notion_blocks/equation.astro";
+import SyncedBlock from "./notion_blocks/synced_block.astro";
+const { blocks } = Astro.props;
+let groupedBlock = [];
+---
+{
+    blocks.map((block, index) => {
+        let ret = null;
+        if (block != undefined) {
+            switch (block.type) {
+                case "paragraph":
+                    ret = <Paragraph block={block} id={`p-${index}`}/>;
+                    break;
+                case "heading_1":
+                    ret =  <Heading1 block={block} id={`h-${index}`}/>;
+                    break;
+                case "heading_2":
+                    ret =  <Heading2 block={block} id={`h-${index}`}/>;
+                    break;
+                case "heading_3":
+                    ret =  <Heading3 block={block} id={`h-${index}`}/>;
+                    break;
+                case "bulleted_list_item":
+                    groupedBlock.push(block);
+                    if (
+                        blocks.length - 1 == index ||
+                            blocks[++index].type != block.type
+                        ) {
+                        let tempArray = groupedBlock;
+                        groupedBlock = [];
+                        ret =  <BulletedList blocks={tempArray} id={`bli-${index}`}/>;
+                        }
+                    break;
+                case "numbered_list_item":
+                    groupedBlock.push(block);
+                    if (
+                        blocks.length - 1 == index ||
+                            blocks[++index].type != block.type
+                        ) {
+                        let tempArray = groupedBlock;
+                        groupedBlock = [];
+                        ret =  <NumberedList blocks={tempArray} id={`nli-${index}`}/>;
+                        }
+                    break;
+                case "toggle":
+                    ret =  <Toggle block={block} index={index} id={`t-${index}`}/>;
+                    break;
+                case "quote":
+                    ret =  <Quote block={block} id={`q-${index}`}/>;
+                    break;
+                case "callout":
+                    ret =  <Callout block={block} id={`c-${index}`}/>;
+                    break;
+                case "code":
+                    ret =  <Code block={block} id={`c-${index}`}/>;
+                    break;
+                case "image":
+                    ret =  <Image block={block} id={`image-${index}`}/>;
+                    break;
+                case "equation":
+                    ret =  <Equation block={block} id={`eq-${index}`}/>;
+                    break;
+                case "synced_block":
+                    ret =  <SyncedBlock block={block} id={`sb-${index}`}/>;
+                    break;
+                default:
+                    break;
+                }
+            return ret;
+            }
+        })
+    }

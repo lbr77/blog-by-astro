@@ -1,11 +1,8 @@
 ---
-import "../styles/VOID.scss";
 import {SEO} from "astro-seo";
 import {getImage} from "astro:assets";
 import getUA from "../utils/util";
 import Navbar from "../components/Navbar.astro";
-import Ldjson from "../components/Ldjson.astro";
-import Banner from "../components/Banner.astro";
 import Footer from "../components/Footer.astro";
 import {ImageMetadata} from "astro";
 interface Props {
@@ -37,7 +34,7 @@ const feConfig = {
     headerMode: themeConfig.headerMode,
     followSystemColorScheme: themeConfig.followSystemColorScheme,
     browserLevelLoadingLazy: themeConfig.browserLevelLoadingLazy,
-    VOIDPlugin: false,//显然是没有的
+    VOIDPlugin: true,//显然是没有的
     votePath: "/action/void?",//说不定能做出来呢
     lightBg: "",
     darkBg: "",
@@ -112,15 +109,21 @@ const url = Astro.url;
                 },
             }}
     />
-    <script is:inline src="/assets/jquery.min.js"/>
+    <link rel="stylesheet" href="/assets/bundle.css"/>
+    <link rel="stylesheet" href="/assets/VOID.css"/>
+    <link rel="stylesheet" href="/assets/ExSearch.css"/>
     <script is:inline src="/assets/bundle-header.js"/>
-    <script is:inline src="/assets/bundle.js"/>
     <script data-config={JSON.stringify(feConfig)}>
         const VOIDConfig = JSON.parse(document.currentScript.dataset.config);
+        const ExSearchConfig = {
+            root: "",
+            api: "/action/exsearch",
+        }
     </script>
+
     <script is:inline src="/assets/header.js"/>
     <!--这里添加你需要修改的内容哦！-->
-
+    <script is:inline src="/assets/twikoo.all.min.js"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
     {themeConfig.serifincontent &&
             <link id="stylesheet_noto"
@@ -140,5 +143,6 @@ const url = Astro.url;
     <slot/>
 </main>
 <Footer/>
+
 </body>
 </html>

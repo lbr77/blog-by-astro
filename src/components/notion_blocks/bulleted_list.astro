@@ -1,0 +1,32 @@
+---
+
+let { blocks } = Astro.props;
+
+function contentLoop(blocks) {
+    let htmlString = "";
+
+    for (const block of blocks) {
+        htmlString += `<li>${block.text}</li>`;
+
+        if (block.children.length > 0) {
+            htmlString += `
+        <ul
+          role="list"
+          class="list-[revert] list-inside text-xl ml-10"
+        >
+          ${contentLoop(block.children)}
+        </ul>
+      `;
+        }
+    }
+    return htmlString;
+}
+
+let rawHtmlString = contentLoop(blocks);
+---
+
+<ul
+        role="list"
+        class="list-[revert] list-inside text-xl mb-4"
+        set:html={rawHtmlString}
+/>

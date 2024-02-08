@@ -1,0 +1,16 @@
+---
+import katex from "katex";
+import BlogRender from "../Content.astro";
+
+
+let { block } = Astro.props;
+
+let equation = katex.renderToString(block.text, {
+    //https://katex.org/docs/options.html
+    throwOnError: false,
+    output: "mathml",
+});
+---
+
+<figure class="text-xl my-8 flex justify-center" set:html={equation} />
+{block.children_level != 0 ? <BlogRender blocks={block.children} /> : ""}

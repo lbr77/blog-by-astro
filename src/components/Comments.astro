@@ -1,11 +1,11 @@
 ---
 const slug = Astro.props.slug;
+const themeConfig = Astro.locals.config.themeConfig;
 ---
 <div id="tcomment"></div>
-<script is:inline src="https://cdn.staticfile.org/twikoo/1.6.31/twikoo.all.min.js" />
-<script is:inline>
+<script is:inline data-twikoo={themeConfig.twikooEnvId}>
     twikoo.init({
-        envId: "https://comment.nvme0n1p.dev/.netlify/functions/twikoo",
+        envId: document.currentScript.dataset.twikoo,
         el: "#tcomment",
     })
 </script>

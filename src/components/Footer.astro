@@ -1,4 +1,5 @@
 ---
+import {SEO} from "astro-seo";
 const siteConfig = Astro.locals.config.siteConfig;
 const themeConfig = Astro.locals.config.themeConfig;
 ---
@@ -72,11 +73,14 @@ const themeConfig = Astro.locals.config.themeConfig;
         <section id="login-panel">
 
         </section>
-        <!--    TODO 友情链接系统 -->
     </aside>
+
+    <script data-manual is:inline src="/assets/bundle.js"/>
     <!--{themeConfig.serviceWorker != "" && } 跳过serviceworker了这个是最后再搞的东西xxx-->
     {themeConfig.enableMath && <script is:inline src="/assets/libs/mathjax/2.7.4/MathJax.js"/>}
     <script is:inline src="/assets/VOID.js"/>
+    <script is:inline src="/assets/ExSearch.js"/>
+
     <script is:inline data-reloadfunc={themeConfig.pjaxreload}>
         if ($(".OwO").length > 0) { //似乎是评论系统的表情包但是评论系统我用不上啊
             new OwO({

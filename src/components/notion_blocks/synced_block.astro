@@ -1,0 +1,8 @@
+---
+import BlogRender from "../Content.astro";
+
+
+let { block } = Astro.props;
+---
+
+{block.children_level != 0 ? <BlogRender blocks={block.children} /> : ""}

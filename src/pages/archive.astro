@@ -4,7 +4,7 @@ import LayoutArchive from '../layouts/LayoutArchive.astro';
 import {getStatics} from "../utils/notion/posts";
 const title = "归档";
 const {tags,years,words,posts} = await getStatics();
-const subTitle = `${tags.length} 分类 × ${posts} 文章` // × ${words} 字
+const subTitle = `${tags.length} 分类 × ${posts} 文章 × ${words} 字`
 ---
 <LayoutDefault>
     <LayoutArchive title={title} subtitle={subTitle} postsByyear={years}/>
