@@ -2,7 +2,7 @@
 import LayoutCategory from "../../layouts/LayoutCategory.astro";
 import LayoutDefault from "../../layouts/LayoutDefault.astro";
 import Layout404 from "../../layouts/Layout404.astro";
-import {getPostsByTag, getAllTags} from "../../utils/notion/posts";
+import {getPostsByTag} from "../../utils/notion/posts";
 const {slug} = Astro.params;
 const title = `分类 "${slug}" 下的文章`;
 const nowPage = parseInt(new URL(Astro.request.url).searchParams.get("p") || "1");

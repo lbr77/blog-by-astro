@@ -1,5 +1,5 @@
 import {getAllPosts} from "../utils/notion/posts.ts";
-import {getCollection, getEntries} from "astro:content";
+import {getCollection} from "astro:content";
 
 async function generateeSiteMap(){
     const posts = await getAllPosts();

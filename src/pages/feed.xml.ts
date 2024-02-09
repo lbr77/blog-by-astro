@@ -2,7 +2,7 @@ import rss from '@astrojs/rss';
 import {THEME_CONFIG as config} from '../theme.config.ts';
 import {getAllPosts} from "../utils/notion/posts.ts";
 
-export async function GET(ctx){
+export async function GET(){
     // @ts-ignore
     const blog = await getAllPosts();
     // @ts-ignore

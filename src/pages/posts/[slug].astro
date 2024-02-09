@@ -1,9 +1,8 @@
 ---
 import LayoutDefault from "../../layouts/LayoutDefault.astro";
-import {getEntry} from 'astro:content';
 import PostLayout from "../../layouts/LayoutPost.astro";
 import Layout404 from "../../layouts/Layout404.astro";
-import {getAllPosts, getPostBySlug} from "../../utils/notion/posts";
+import {getPostBySlug} from "../../utils/notion/posts";
 const slug = Astro.params.slug;
 const blog = await getPostBySlug(slug);
 
