@@ -6,6 +6,9 @@ let lang = "";
 
 if (block.options != null && "language" in block.options) {
     lang = block.options.language;
+    if(lang === "plain text"){
+        lang = "plaintext"
+    }
 }
 ---
 

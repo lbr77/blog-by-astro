@@ -80,23 +80,12 @@ const themeConfig = Astro.locals.config.themeConfig;
     {themeConfig.enableMath && <script is:inline src="/assets/libs/mathjax/2.7.4/MathJax.js"/>}
     <script is:inline src="/assets/VOID.js"/>
     <script is:inline src="/assets/ExSearch.js"/>
-
+    <script is:inline src="/assets/overlayscrollbars.min.js"/>
     <script is:inline data-reloadfunc={themeConfig.pjaxreload}>
-        if ($(".OwO").length > 0) { //似乎是评论系统的表情包但是评论系统我用不上啊
-            new OwO({
-                logo: 'OωO',
-                container: document.getElementsByClassName('OwO')[0],
-                target: document.getElementsByClassName('input-area')[0],
-                api: '/assets/libs/owo/OwO_03.json',
-                position: 'down',
-                width: '400px',
-                maxHeight: '250px'
-            });
-        }
-        const func = document.currentScript.dataset.reloadfunc;
-        if(func){
+        const osInstance =   OverlayScrollbarsGlobal.OverlayScrollbars(document.body, {});
+        if(document.currentScript.dataset.reloadfunc){
             $(document).on('pjax:complete', function () {
-                eval(func);//额非常无语的写法
+                eval(document.currentScript.dataset.reloadfunc);//额非常无语的写法
             })
         }
         //Hitokoto

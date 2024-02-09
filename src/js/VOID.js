@@ -160,7 +160,7 @@ var VOID = {
 
         VOID_Content.countWords();
         VOID_Content.parseTOC();
-        VOID_Content.parsePhotos();
+        // VOID_Content.parsePhotos();
         VOID_Content.highlight();
         VOID_Content.parseUrl();
         VOID_Content.pangu();
@@ -212,7 +212,7 @@ var VOID = {
         VOID_Ui.checkScrollTop();
         VOID_Content.countWords();
         VOID_Content.parseTOC();
-        VOID_Content.parsePhotos();
+        // VOID_Content.parsePhotos();
         VOID_Content.parseUrl();
         VOID_Content.highlight();
         VOID_Content.math();

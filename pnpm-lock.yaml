@@ -98,6 +98,9 @@ dependencies:
   outlayer:
     specifier: ^2.1.1
     version: 2.1.1
+  overlayscrollbars:
+    specifier: ^2.5.0
+    version: 2.5.0
   prismjs:
     specifier: ^1.29.0
     version: 1.29.0
@@ -5809,6 +5812,10 @@ packages:
       ev-emitter: 1.1.1
       fizzy-ui-utils: 2.0.7
       get-size: 2.0.3
+    dev: false
+
+  /overlayscrollbars@2.5.0:
+    resolution: {integrity: sha512-CWVC2dwS07XZfLHDm5GmZN1iYggiJ8Vufnvzwt0gwR9Yz1hVckKeTxg7VILZeYVGhDYJHZ1Xc8Xfys5dWZ1qiA==}
     dev: false
 
   /p-cancelable@2.1.1:
