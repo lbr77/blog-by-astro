@@ -1,19 +1,19 @@
 import rss from '@astrojs/rss';
 import {THEME_CONFIG as config} from '../theme.config.ts';
-import {getCollection} from "astro:content";
+import {getAllPosts} from "../utils/notion/posts.ts";
 
 export async function GET(ctx){
     // @ts-ignore
-    const blog = await getCollection('posts');
+    const blog = await getAllPosts();
     // @ts-ignore
     return rss({
         title: config.siteConfig.title,
         description: config.siteConfig.desc,
         site: config.siteConfig.website,
         items: blog.map((p)=>({
-            title: p.data.title,
-            pubDate: p.data.date,
-            description: p.data.excerpt,
+            title: p.title,
+            pubDate: p.createdAt,
+            description: p.excerpt,
             link: "/posts/"+p.slug,
         })),
     })

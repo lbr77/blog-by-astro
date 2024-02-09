@@ -9,16 +9,6 @@ const nowPage = parseInt(new URL(Astro.request.url).searchParams.get("p") || "1"
 const numPerPage = 12;
 const posts = await getPostsByTag(slug, numPerPage, nowPage);
 const lenposts = posts.length;
-export async function getStaticPaths() {
-    const response = await getAllTags();
-    return response.map((tag) => {
-        return {
-            params: {
-                slug: `category/${tag}`
-            }
-        }
-    });
-}
 ---
 
 {lenposts != 0 ?

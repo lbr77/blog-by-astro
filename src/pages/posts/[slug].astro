@@ -7,16 +7,6 @@ import {getAllPosts, getPostBySlug} from "../../utils/notion/posts";
 const slug = Astro.params.slug;
 const blog = await getPostBySlug(slug);
 
-export async function getStaticPaths(){
-    const response = await getAllPosts();
-    return response.map((page)=>{
-        return {
-            params:{
-                slug: `posts/${page.slug}`
-            }
-        }
-    });
-}
 ---
 {blog ? <LayoutDefault title={blog.title}>
 <PostLayout content={blog}/>
