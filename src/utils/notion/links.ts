@@ -42,6 +42,6 @@ export async function getAllLinks() {
             pic: picLink
         }
     });
-    await set("notion:links_data", JSON.stringify(links), 24*60 * 60);
+    await set("notion:links_data", JSON.stringify(links), 15 * 60);
     return links;
 }

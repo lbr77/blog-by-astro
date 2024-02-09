@@ -1,6 +1,6 @@
 import {Client, isFullBlock} from '@notionhq/client';
 import {NOTION_API_SECRET, NOTION_POST_DATABASE_ID} from "../../server_env.ts";
-import {get, set} from "../redis.ts";
+import {del, get, set} from "../redis.ts";
 import katex from "katex";
 
 export const client = new Client({
@@ -27,7 +27,7 @@ export async function buildSearchIndex() {
         let tags = post.tags;
         indexs.push(index);
     }
-    await set("notion:search_index", JSON.stringify(indexs));
+    await set("notion:search_index", JSON.stringify(indexs),15 * 60);
     return {posts: indexs,pages: []};
 }
 
@@ -36,7 +36,7 @@ async function getTotalWords() {
     if (totalwords) {
         return JSON.parse(totalwords);
     }
-    await set("notion:totalwords", JSON.stringify(0));
+    await del("notion:totalwords");
     return 0;
 }
 
@@ -219,12 +219,6 @@ export async function getPostBySlug(slug: string) {
 
 // 文章内容相关
 async function getAllBlocksByBlockId(blockId: string) {
-    // if(cache_){
-    //         const cache = await get(`notion:${blockId}`);
-    //         // if (cache) { // skip cache for testing purpose
-    //         //     return JSON.parse(cache);
-    //         // }
-    // }
     let blocks = [];
     const params = {
         block_id: blockId,
@@ -242,11 +236,6 @@ async function getAllBlocksByBlockId(blockId: string) {
         }
         params["start_cursor"] = res.next_cursor;
     }
-    // if(cache_){
-    //     // cache the results
-    //     await set(`notion:blocks:${blockId}`, JSON.stringify(blocks), 24 * 60 * 60);
-    //     // 1 day.
-    // }
     return blocks;
 }
 
@@ -400,7 +389,7 @@ export async function getContent(blockId) {
     }
     const results = await getAllBlocksByBlockId(blockId);
     const ress = await addToContents(results);
-    await set(`notion:block:${blockId}`, JSON.stringify(ress), 24 * 60 * 60);
+    await set(`notion:block:${blockId}`, JSON.stringify(ress), 30 * 24 * 60 * 60); // 1day
     return ress;
 }
 
