@@ -13,7 +13,6 @@ export async function buildSearchIndex() {
     if (cache) {
         return {posts: JSON.parse(cache),pages: []};
     }
-    ;
     const posts = await getAllPosts();
     const indexs = [];
     for (const post of posts) {
@@ -24,7 +23,7 @@ export async function buildSearchIndex() {
             path: `/posts/${post.slug}`,
             text: getPureText(await getContent(post.id))
         };
-        let tags = post.tags;
+        // let tags = post.tags;
         indexs.push(index);
     }
     await set("notion:search_index", JSON.stringify(indexs),15 * 60);
@@ -116,9 +115,9 @@ export async function getStatics() {
 export async function getAllPosts() {
     // redis cache
     const cache = await get("notion:posts_data");
-    // if (cache) { //skip cache for testing purpose
-    //     return JSON.parse(cache);
-    // }
+    if (cache) { //skip cache for testing purpose
+        return JSON.parse(cache);
+    }
     const params = {
         database_id: NOTION_POST_DATABASE_ID,
         filter: {
@@ -213,7 +212,6 @@ export async function getPostBySlug(slug: string) {
         console.error(err);
         return [];
     });
-    ;
     return allPosts.find((post) => post.slug === slug);
 }
 
