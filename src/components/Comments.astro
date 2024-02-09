@@ -3,7 +3,7 @@ const slug = Astro.props.slug;
 const themeConfig = Astro.locals.config.themeConfig;
 ---
 <div id="tcomment"></div>
-<script is:inline data-twikoo={themeConfig.twikooEnvId}>
+<script data-twikoo={themeConfig.twikooEnvId}>
     twikoo.init({
         envId: document.currentScript.dataset.twikoo,
         el: "#tcomment",

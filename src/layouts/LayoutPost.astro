@@ -11,7 +11,6 @@ const twikooEnv = Astro.locals.config.themeConfig.twikooEnvId;
 <Ldjson url={new URL(Astro.request.url)} banner={blog.banner}/>
 <Banner banner={blog.banner} type="post" bannerStyle={blog.bannerStyle} title={blog.title}
         desc={desc} bannerStyle={blog.bannerStyle}/>
-
 <script is:inline data-twikoo={twikooEnv}>
     twikoo.getCommentsCount(
         {envId: document.currentScript.dataset.twikoo, urls: [location.href],includeReply: true},

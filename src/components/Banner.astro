@@ -32,7 +32,7 @@ if (type == 'archive') {
             <div id="banner" class={blur && "blur"} data-src={banner}>
                 <img src={banner} class="" data-src={banner}></div> :
             <>
-                <script is:inline>$('body>header').addClass('force-dark').addClass('no-banner');</script>
+                <script>$('body>header').addClass('force-dark').addClass('no-banner');</script>
                 <style>main > .lazy-wrap {
                     min-height: 0;
                 }</style>

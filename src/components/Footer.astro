@@ -75,13 +75,13 @@ const themeConfig = Astro.locals.config.themeConfig;
         </section>
     </aside>
 
-    <script data-manual is:inline src="/assets/bundle.js"/>
+    <script data-manual src="/assets/bundle.js"/>
     <!--{themeConfig.serviceWorker != "" && } 跳过serviceworker了这个是最后再搞的东西xxx-->
     {themeConfig.enableMath && <script is:inline src="/assets/libs/mathjax/2.7.4/MathJax.js"/>}
     <script is:inline src="/assets/VOID.js"/>
     <script is:inline src="/assets/ExSearch.js"/>
     <script is:inline src="/assets/overlayscrollbars.min.js"/>
-    <script is:inline data-reloadfunc={themeConfig.pjaxreload}>
+    <script data-reloadfunc={themeConfig.pjaxreload}>
         const osInstance =   OverlayScrollbarsGlobal.OverlayScrollbars(document.body, {});
         if(document.currentScript.dataset.reloadfunc){
             $(document).on('pjax:complete', function () {
