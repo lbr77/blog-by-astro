@@ -1,9 +1,10 @@
-import {getAllPosts} from "../utils/notion/posts.ts";
+import {getAllPosts,getAllTags} from "../utils/notion/posts.ts";
 import {getCollection} from "astro:content";
 
 async function generateeSiteMap(){
     const posts = await getAllPosts();
     const pages  = await getCollection("pages");
+    const tags = await getAllTags();
     return `<xml version="1.0" encoding="UTF-8">
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
@@ -20,6 +21,13 @@ async function generateeSiteMap(){
          <loc>http://nvme0n1p.dev/${page.slug}</loc>
 </url>`
     })}
+     ${
+        tags.map((tag)=>{
+            return `<url>
+                <loc>http://nvme0n1p.dev/category/${tag}</loc>
+            </url>`
+        })
+    }
      ${
         posts.map((post)=>{
             return `<url>
