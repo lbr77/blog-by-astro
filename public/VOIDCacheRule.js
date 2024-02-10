@@ -17,12 +17,12 @@
   var maxEntries = 200;
 
 
-  self.importScripts('usr/themes/VOID/assets/sw-toolbox.js');
+  self.importScripts('/assets/sw-toolbox.js');
 
   self.toolbox.options.debug = false;
 
   // 缓存本站静态文件
-  self.toolbox.router.get('/usr/(.*)', self.toolbox.cacheFirst, {
+  self.toolbox.router.get('/assets/(.*)', self.toolbox.cacheFirst, {
     cache: {
       name: staticAssetsCacheName,
       maxEntries: maxEntries

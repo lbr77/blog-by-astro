@@ -55,7 +55,8 @@ if (themeConfig.colorScheme == 0) {
             buildBodyClass.push("theme_dark");
         }
     }
-} else if (themeConfig.colorScheme == 2) {
+}
+else if (themeConfig.colorScheme == 2) {
     buildBodyClass.push("theme-dark");
 }
 if (themeConfig.macStyleCodeBlock) {
@@ -125,7 +126,7 @@ const url = Astro.url;
     <script is:inline src="/assets/header.js"/>
     <!--这里添加你需要修改的内容哦！-->
     <script is:inline src="/assets/twikoo.all.min.js"/>
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-GW5WE9KBCG"></script>
+    <script is:inline async src="/assets/gtag.js?id=G-GW5WE9KBCG"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
