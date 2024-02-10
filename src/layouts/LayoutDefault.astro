@@ -174,8 +174,9 @@ const url = Astro.url;
             loadClipboard();
         });
     </script>
-    <script is:inline src="/assets/twikoo.all.min.js"/>
+    <script is:inline async src="/assets/twikoo.all.min.js"/>
     <script is:inline async src="/action/ga?id=G-GW5WE9KBCG"></script>
+    <!--<script is:inline async src="/assets/ga.js"></script>-->
     <script is:inline>
         window.dataLayer = window.dataLayer || [];
         function analyse(){dataLayer.push(arguments);}
