@@ -93,7 +93,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
         // 浏览器具体适配情况请参考：https://caniuse.com/loading-lazy-attr
         // 注意：开启后将使得模糊懒加载功能失效
         browserLevelLoadingLazy: false,
-        macStyleCodeBlock: false,
+        macStyleCodeBlock: true,
         // 代码行数显示
         lineNumbers: true,
         // 自定义添加社交链接

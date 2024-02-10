@@ -115,6 +115,20 @@ const url = Astro.url;
     <link rel="stylesheet" href="/assets/ExSearch.css"/>
     <link rel="stylesheet" href="/assets/overlayscrollbars.css"/>
     <script is:inline src="/assets/bundle-header.js"/>
+    <style is:global> /* 剪切板 */
+    .clipboard {
+        position: absolute;
+        top: 3px;
+        right: 10px;
+        color: #22252b;
+        z-index: 100;
+        text-align: center;
+        cursor: pointer;
+        line-height: 18px;
+    }
+    body.theme-dark .clipboard {
+        color: white;
+    }</style>
     <script data-config={JSON.stringify(feConfig)}>
         const VOIDConfig = JSON.parse(document.currentScript.dataset.config);
         const ExSearchConfig = {
@@ -160,22 +174,6 @@ const url = Astro.url;
             loadClipboard();
         });
     </script>
-    <style>
-        /* 剪切板 */
-        .clipboard {
-            position: absolute;
-            top: 3px;
-            right: 10px;
-            color: #22252b;
-            z-index: 100;
-            text-align: center;
-            cursor: pointer;
-            line-height: 18px;
-        }
-        body.theme-dark .clipboard {
-            color: white;
-        }
-    </style>
     <script is:inline src="/assets/twikoo.all.min.js"/>
     <script is:inline async src="/assets/gtag.js?id=G-GW5WE9KBCG"></script>
     <script>
