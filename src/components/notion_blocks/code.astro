@@ -1,6 +1,4 @@
 ---
-import { Prism } from "@astrojs/prism";
-
 let { block } = Astro.props;
 let lang = "";
 
@@ -12,4 +10,5 @@ if (block.options != null && "language" in block.options) {
 }
 ---
 
-<Prism code={block.text} lang={lang} class="p-8 my-8" />
+<!--<Prism code={block.text} lang={lang} class="p-8 my-8" />-->
+<pre class={`language-${lang}`}><code>{block.text}</code></pre>
