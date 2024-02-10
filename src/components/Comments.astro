@@ -5,7 +5,7 @@ const themeConfig = Astro.locals.config.themeConfig;
 <div id="tcomment"></div>
 <script data-twikoo={themeConfig.twikooEnvId}>
     twikoo.init({
-        envId: document.currentScript.dataset.twikoo,
+        envId: "https://comment.nvme0n1p.dev/.netlify/functions/twikoo",
         el: "#tcomment",
     })
 </script>

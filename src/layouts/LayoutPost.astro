@@ -13,7 +13,7 @@ const twikooEnv = Astro.locals.config.themeConfig.twikooEnvId;
         desc={desc} bannerStyle={blog.bannerStyle}/>
 <script is:inline data-twikoo={twikooEnv}>
     twikoo.getCommentsCount(
-        {envId: document.currentScript.dataset.twikoo, urls: [location.href],includeReply: true},
+        {envId: "https://comment.nvme0n1p.dev/.netlify/functions/twikoo", urls: [location.href],includeReply: true},
     ).then((res)=>{
         $("#twikoo_comments").text(res[0].commentsCount)
     }).catch((err)=>{

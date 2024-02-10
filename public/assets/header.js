@@ -447,11 +447,14 @@ VOID_Ui = {
         },
         watch: function (id) {
             var el = document.getElementById(id);
-            new ResizeSensor(el, function () {
-                if (VOID_Ui.MasonryCtrler.check() && $('#masonry').hasClass('masonry')) {
-                    VOID_Ui.MasonryCtrler.masonry();
-                }
-            });
+            if(el){
+                new ResizeSensor(el, function () {
+                    if (VOID_Ui.MasonryCtrler.check() && $('#masonry').hasClass('masonry')) {
+                        VOID_Ui.MasonryCtrler.masonry();
+                    }
+                });
+            }
+
         }
     },
 

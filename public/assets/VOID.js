@@ -222,18 +222,6 @@ var VOID = {
 
         VOID_Vote.reload();
 
-        // 重载表情
-        if ($('.OwO').length > 0) {
-            new OwO({
-                logo: 'OωO',
-                container: document.getElementsByClassName('OwO')[0],
-                target: document.getElementsByClassName('input-area')[0],
-                api: '/usr/themes/VOID/assets/libs/owo/OwO_03.json',
-                position: 'down',
-                width: '400px',
-                maxHeight: '250px'
-            });
-        }
         
         AjaxComment.init();
     },
