@@ -98,7 +98,7 @@ const themeConfig = Astro.locals.config.themeConfig;
         const osInstance =   OverlayScrollbarsGlobal.OverlayScrollbars(document.body, {});
         if(document.currentScript.dataset.reloadfunc){
             $(document).on('pjax:complete', function () {
-                gtag('event', 'pageview', {page_location: window.location.href});
+                analyse("event","pageview",{page_location: window.location.href});
                 loadClipboard();//额非常无语的写法
                 loadHitokoto();
             })

@@ -51,7 +51,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
         // footer输出内容，备案号，统计代码等。//Deprecated
         footer: "",
         // PJAX启用？
-        pjax: false,
+        pjax: true,
         // pjax重载函数
         pjaxreload: "",
         // 自定义 Service Worker
