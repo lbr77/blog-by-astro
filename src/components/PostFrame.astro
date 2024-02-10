@@ -8,6 +8,7 @@ const createdSince = Math.floor((new Date() - created) / 1000 / 60 / 60 / 24);
 const modifiedSince = Math.floor((new Date() - lastModified) / 1000 / 60 / 60 / 24);
 import {get} from "../utils/redis";
 import {getContent} from "../utils/notion/posts";
+import Copyright from "../components/Copyright.astro";
 const posts = await getContent(blog.id);
 ---
 <article class="post yue">
@@ -17,6 +18,8 @@ const posts = await getContent(blog.id);
     <div class="articleBody" class="full">
         <Content blocks={posts}> </Content>
     </div>
+
+    <Copyright blog={blog}/>
     <div class="social-button"
          data-url={Astro.url.href}
          data-title={blog.title}
