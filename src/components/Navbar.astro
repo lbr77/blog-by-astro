@@ -5,8 +5,7 @@ const title = themeConfig.title;
 const nav = themeConfig.navs;
 const tags = await getAllTags();
 ---
-<header class="header-mode-2">
-    <!--TODO bugfix,header mode 1-->
+<header class="header-mode-1">
     <div class="container wider">
         <nav>
             <a role=button aria-label="展开导航" class="toggle" target="_self" href="javascript:void(0);"
@@ -44,5 +43,20 @@ const tags = await getAllTags();
     </div>
 </header>
 <div id="nav-mobile">
-    <!-- 手机版面，可以不做（确信  TODO  -->
+    <section id="pages" data-title="PAGES">
+        <nav>
+            {
+                nav.map((item, index) => {
+                    return <a href={item.link}>{item.text}</a>;
+                })
+            }
+        </nav>
+    </section>
+    <section id="categories" data-title="CATEGORIES">
+        <nav>
+            {tags.map((tag)=>(
+                        <a href={`/category/${tag}`}>{tag}</a>
+            ))}
+        </nav>
+    </section>
 </div>

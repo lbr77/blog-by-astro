@@ -66,7 +66,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
         desktopBannerHeight: 30,
         mobileBannerHeight: 30,
         // 导航栏模式，随滚动显隐(0)，固定(1)，不固定(2)
-        headerMode: 0,
+        headerMode: 1,
         // 移动端导航栏模式，同上。不设置时默认与 headerMode 一致
         headerModeMobile: 0,
         // 文章字号。当用户在前端自己设置后，该选项会被覆盖。默认为 18px。
