@@ -7,7 +7,7 @@ const links = Astro.props.links;
         {links.map((link)=>{
             return (
                     <a target="_blank" class="board-item link-item" href={link.link}>
-                        <div class="board-thumb loaded" data-thumb={link.pic}></div>
+                        <div class="board-thumb" data-thumb={link.pic}></div>
                         <div class="board-title">{link.name}</div>
                     </a>
             )

@@ -2,6 +2,7 @@ import {Client, isFullBlock} from '@notionhq/client';
 import {NOTION_API_SECRET, NOTION_POST_DATABASE_ID} from "../../server_env.ts";
 import {del, get, set} from "../redis.ts";
 import katex from "katex";
+import {getEntries,getCollection} from "astro:content";
 
 export const client = new Client({
     auth: NOTION_API_SECRET,
@@ -11,10 +12,10 @@ export const client = new Client({
 export async function buildSearchIndex() {
     const cache = await get("notion:search_index");
     if (cache) {
-        return {posts: JSON.parse(cache),pages: []};
+        return  JSON.parse(cache);
     }
     const posts = await getAllPosts();
-    const indexs = [];
+    const post_data = [];
     for (const post of posts) {
         let index = {
             title: post.title,
@@ -24,10 +25,23 @@ export async function buildSearchIndex() {
             text: getPureText(await getContent(post.id))
         };
         // let tags = post.tags;
-        indexs.push(index);
+        post_data.push(index);
     }
-    await set("notion:search_index", JSON.stringify(indexs),15 * 60);
-    return {posts: indexs,pages: []};
+    const pages = await getCollection("pages");
+    const page_data = [];
+
+    for (const page of pages) {
+        let index = {
+            title: page.data.title,
+            date: page.data.date,
+            path: `/${page.slug}`,
+            text: page.body
+        };
+        page_data.push(index);
+    }
+    await set("notion:search_index", JSON.stringify({posts: post_data,pages: page_data}),15 * 60);
+
+    return {posts: post_data,pages: page_data};
 }
 
 async function getTotalWords() {

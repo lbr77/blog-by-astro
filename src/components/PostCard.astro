@@ -2,8 +2,12 @@
 import {getWordCount} from "../utils/notion/posts";
 const data = Astro.props.post;
 let generateClass = () => {
+    let bannerAsCover = data.bannerAsCover;
+    if(data.banner == ""){
+        bannerAsCover = "0";
+    }
     let ret = "masonry-item style-";
-    ret += `${data.bannerAsCover}`
+    ret += `${bannerAsCover}`
     return ret;
 };
 let formatCustomDate = (date) => {

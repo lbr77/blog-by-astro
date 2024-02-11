@@ -92,7 +92,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
         // 为图片提供更好的SEO支持。只适配较新版本的浏览器，不支持的浏览器将自动加载当前页面下的所有图片
         // 浏览器具体适配情况请参考：https://caniuse.com/loading-lazy-attr
         // 注意：开启后将使得模糊懒加载功能失效
-        browserLevelLoadingLazy: false,
+        browserLevelLoadingLazy: true,
         macStyleCodeBlock: true,
         // 代码行数显示
         lineNumbers: true,
