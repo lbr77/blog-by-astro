@@ -106,20 +106,6 @@ var VOID_Content = {
     },
 
     highlight: function () {
-        $.each($('.yue pre code'), function (i, item) {
-            var classStr = $(item).attr('class');
-
-            if (typeof(classStr) == 'undefined') {
-                classStr = 'language-none';
-            }
-
-            if (classStr.indexOf('lang') == -1) {
-                classStr += ' language-none';
-            }
-
-            $(item).attr('class', classStr);
-        });
-        
         Prism.highlightAll();
     },
 
