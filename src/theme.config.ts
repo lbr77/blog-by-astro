@@ -42,7 +42,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
         //文章内容使用衬线体
         serifincontent: false,
         // 图片懒加载
-        lazyload: false,
+        lazyload: true,
         // 启用mathjax
         enableMath: true,
         /*如需配置header/footer请前往对应代码处手动修改。*/
