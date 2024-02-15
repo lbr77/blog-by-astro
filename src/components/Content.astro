@@ -75,7 +75,11 @@ let groupedBlock = [];
                 case "synced_block":
                     ret =  <SyncedBlock block={block} id={`sb-${index}`}/>;
                     break;
+                case "divider":
+                    ret = <hr />;
+                    break;
                 default:
+                    console.log(block.type)
                     break;
                 }
             return ret;

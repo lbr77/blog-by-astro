@@ -40,7 +40,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
         // 打赏二维码
         reward: "",
         //文章内容使用衬线体
-        serifincontent: false,
+        serifincontent: true,
         // 图片懒加载
         lazyload: true,
         // 启用mathjax

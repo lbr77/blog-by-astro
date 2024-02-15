@@ -4,5 +4,5 @@ import BlogRender from "../Content.astro";
 let { block,id } = Astro.props;
 ---
 
-<h3 class="text-2xl font-bold mt-16 mb-8" set:html={block.text} id={id}/>
+<h3 set:html={block.text} id={id}/>
 {block.children_level != 0 ? <BlogRender blocks={block.children} /> : ""}

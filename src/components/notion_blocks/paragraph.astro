@@ -9,5 +9,5 @@ if(block.text == ""){
 }
 ---
 
-<p class="text-xl my-8" set:html={block.text}/>
+<p set:html={block.text}/>
 {block.children_level != 0 ? <BlogRender blocks={block.children} /> : ""}

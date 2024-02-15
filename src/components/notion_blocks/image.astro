@@ -7,5 +7,7 @@ if (block.options != null && "url" in block.options) {
     imgSrc = block.options.url;
 }
 ---
+<a href={imgSrc} data-fancybox="gallery">
+    <img src={imgSrc} alt="image" class="lazyload browserlevel-lazy" loading="lazy" />
+</a>
 
-<img src={imgSrc} alt="image" class="lazyload browserlevel-lazy" loading="lazy" />

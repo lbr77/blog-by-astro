@@ -13,5 +13,5 @@ let equation = katex.renderToString(block.text, {
 });
 ---
 
-<figure class="text-xl my-8 flex justify-center" set:html={equation} />
+<figure  set:html={equation} />
 {block.children_level != 0 ? <BlogRender blocks={block.children} /> : ""}
