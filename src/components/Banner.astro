@@ -18,8 +18,8 @@ if (type === 'post' || type == 'page') {
 
 <div class:list={["lazy-wrap",banner===""?"no-banner":"loading dark",type=="index"&&"index"]}>
     {banner != "" ?
-            <div id="banner" class={blur && "blur"} data-src={banner}>
-                <img src={banner} class="lazyload browserlevel-lazy" data-src={banner}></div>
+            <div id="banner" class={blur && "blur"}>
+                <img src={banner} class="lazyload browserlevel-lazy" loading="lazy"></div>
             <script>$('body>header').removeClass('force-dark').removeClass('no-banner');</script>
         : <>
                 <script>$('body>header').addClass('force-dark').addClass('no-banner');</script>
