@@ -8,19 +8,13 @@ const client = await createClient({url: REDIS_URL}).on('error', (err) => {
 });
 
 export async function get(key: string): Promise<string> {
-    return await client.get(key).catch((err) => {
-        console.log(err);
-    }) as string;
+    return await client.get(key) as string;
 }
 
 export async function set(key: string, value: string, ttl?: number): Promise<void> {
-    await client.set(key, value, ttl).catch((err) => {
-        console.log(err);
-    });
+    await client.set(key, value, ttl);
 }
 
 export async function del(key: string): Promise<void> {
-    await client.del(key).catch((err) => {
-        console.log(err);
-    });
+    await client.del(key);
 }

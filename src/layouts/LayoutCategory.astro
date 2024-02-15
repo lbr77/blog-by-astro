@@ -6,14 +6,8 @@ const {title} = Astro.props;
 const {slug} = Astro.params;
 const banner = "/assets/banner.jpg";
 const url = new URL(Astro.request.url);
-let builtclass = ["wrapper", "container"];
 const siteConfig = Astro.locals.config.siteConfig;
 const themeConfig = Astro.locals.config.themeConfig;
-if (themeConfig.indexStyle == 1) {
-    builtclass.push("narrow");
-} else {
-    builtclass.push("wide");
-}
 const posts = Astro.props.posts;
 const nowPage = url.searchParams.get("p") || 1;
 ---
@@ -22,7 +16,7 @@ const nowPage = url.searchParams.get("p") || 1;
     {title}
 </title>
 <Ldjson url={url} banner={banner}/>
-<Banner banner="/assets/banner.jpg" type="index" title={title} desc={""}/>
-<div class:list={builtclass}>
+<Banner banner="/assets/banner.jpg" type="category" title={title} desc={""}/>
+<div class:list={["wrapper", "container",themeConfig.indexStyle == 1?"narrow":"wide"]}>
     <PostList posts={posts} category={slug} nowPage={nowPage}/>
 </div>

@@ -6,12 +6,6 @@ const title = Astro.props.title;
 const url = new URL(Astro.request.url);
 const siteConfig = Astro.locals.config.siteConfig;
 const themeConfig = Astro.locals.config.themeConfig;
-let builtclass = ["wrapper", "container"];
-if (themeConfig.indexStyle == 1) {
-    builtclass.push("narrow");
-} else {
-    builtclass.push("wide");
-}
 const subTitle = Astro.props.subtitle;
 const postsByYear = Astro.props.postsByyear;
 ---
@@ -21,9 +15,9 @@ const postsByYear = Astro.props.postsByyear;
 <Ldjson url={url} banner={"/assets/banner.jpg"}/>
 <Banner
         banner="/assets/banner.jpg"
-        type="index"
+        type="archiveF"
         title={title}
         desc={subTitle}/>
-<div class:list={builtclass}>
+<div class:list={["wrapper", "container",themeConfig.indexStyle == 1?"narrow":"wide"]}>
     <ArchiveList postsByYear={postsByYear}/>
 </div>

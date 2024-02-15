@@ -9,40 +9,74 @@ interface Props {
 }
 let {type, title, bannerStyle, banner, bannerType, desc} = Astro.props;
 let blur = false;
+
 if (type === 'post' || type == 'page') {
     banner = Astro.props.bannerStyle < 2 ? banner : "";
     blur = Astro.props.bannerType === 1;
 }
-let genclass = ["lazy-wrap"];
-if (banner === "") {
-    genclass.push("no-banner");
-} else {
-    genclass.push("loading dark");
-}
-if (type == 'index') {
-    genclass.push("index");
-}
-if (type == 'archive') {
-    genclass.push("archive");
-}
 ---
 
-<div class:list={genclass}>
+<div class:list={["lazy-wrap",banner===""?"no-banner":"loading dark",type=="index"&&"index"]}>
     {banner != "" ?
             <div id="banner" class={blur && "blur"} data-src={banner}>
-                <img src={banner} class="" data-src={banner}></div> :
-            <>
+                <img src={banner} class="lazyload browserlevel-lazy" data-src={banner}></div>
+            <script>$('body>header').removeClass('force-dark').removeClass('no-banner');</script>
+        : <>
                 <script>$('body>header').addClass('force-dark').addClass('no-banner');</script>
                 <style>main > .lazy-wrap {
                     min-height: 0;
                 }</style>
             </>
     }
-
-    <div class="banner-title index force-normal">
-        <h1 class="post-title"><span class="brand">
-                        <span>{title}</span></span><br/>
-            <span class="subtitle"><Fragment set:html={desc}/></span>
+    {type === 'index' ?  <><div class:list={["banner-title","index",banner!=""?"force-normal": ""]}}>
+        <h1 class="post-title">
+            <span class="brand">
+                <span set:html={title} />
+            </span><br/>
+            <span class="subtitle" set:html={desc}/>
         </h1>
+    </div><div id="scrollButton" aria-label="Scroll Down">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="white" height="15px"
+             width="15px" version="1.1" id="Layer_1" viewBox="0 0 330 330" xml:space="preserve">
+            <path id="XMLID_225_"
+                  d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393  c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393  s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z" />
+        </svg>
     </div>
+        <script>
+            document.getElementById('scrollButton').addEventListener('click', function () {
+                var lazyWrap = document.querySelector('.lazy-wrap:not(.no-banner)');
+                var button = document.getElementById('scrollButton');
+
+                if (lazyWrap) {
+                    lazyWrap.style.minHeight = lazyWrap.style.minHeight === '100vh' ? '' : '100vh';
+                    lazyWrap.style.filter = lazyWrap.style.filter === 'brightness(1.3)' ? '' : 'brightness(1.3)';
+                }
+
+                // Toggle the 'rotated' class on the button
+                button.classList.toggle('rotated');
+
+            });
+            let detect = document.querySelector(".index");
+            let banner_img = document.querySelector("#banner > img");
+            banner_img.style.width = "110%";
+            banner_img.style.left = "-5%";
+
+            detect.addEventListener("mouseenter", function(n) {
+                this.x = n.clientX, banner_img.style.transition = "none"
+            });
+
+            detect.addEventListener("mousemove", function(n) {
+                this._x = n.clientX;
+                n = 0 - (this._x - this.x) / -30;
+                banner_img.style.transform = "translate(" + n + "px, 0px)"
+            });
+            detect.addEventListener("mouseleave", function(n) {
+                banner_img.style.transition = ".3s", banner_img.style.transform = "translate(0,0)"
+            });
+        </script></>: <>
+        <div class="banner-title">
+            <h1 class="post-title" set:html={title}/>
+            <p class="post-meta" set:html={desc}></p>
+        </div>
+    </>}
 </div>

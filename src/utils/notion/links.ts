@@ -6,9 +6,14 @@ export const client = new Client({
 });
 
 export async function getAllLinks() {
-    const cache = await get("notion:links_data");
-    if (cache) {
-        return JSON.parse(cache);
+    try{
+        const cache = await get("notion:links_data");
+        if (cache) {
+            return JSON.parse(cache);
+        }
+    }catch(e){
+        console.log("In getAllLinks()");
+        console.error(e);
     }
     let links = [];
     let params = {

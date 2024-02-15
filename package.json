@@ -25,7 +25,8 @@
     "katex": "^0.16.9",
     "node-fetch": "^3.3.2",
     "redis": "^4.6.13",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "ua-parser-js": "^1.0.37"
   },
   "devDependencies": {
     "@types/katex": "^0.16.7",

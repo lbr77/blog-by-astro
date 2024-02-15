@@ -1,6 +1,8 @@
 ---
+import {getPostsLength} from '../utils/notion/posts';
 let posts = Astro.props.posts;
-const totPage = parseInt((posts.length / 12).toString()) + 1;
+
+const totPage = parseInt(((await getPostsLength()) / 12).toString()) + 1;
 interface Props {
     template?: string,
     prev: string,

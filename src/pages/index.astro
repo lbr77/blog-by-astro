@@ -5,7 +5,6 @@ import Layout404 from "../layouts/Layout404.astro";
 import {getPosts} from "../utils/notion/posts";
 const nowPage = parseInt(new URL(Astro.request.url).searchParams.get("p") || "1");
 const numPerPage = 12;
-// const posts = await buildByCategory("", nowPage,numPerPage);
 const posts = await getPosts(numPerPage,nowPage);
 const lenposts = posts.length;
 ---

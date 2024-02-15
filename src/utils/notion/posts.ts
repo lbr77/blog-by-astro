@@ -2,7 +2,7 @@ import {Client, isFullBlock} from '@notionhq/client';
 import {NOTION_API_SECRET, NOTION_POST_DATABASE_ID} from "../../server_env.ts";
 import {del, get, set} from "../redis.ts";
 import katex from "katex";
-import {getEntries,getCollection} from "astro:content";
+import {getCollection} from "astro:content";
 
 export const client = new Client({
     auth: NOTION_API_SECRET,
@@ -10,9 +10,14 @@ export const client = new Client({
 //非文章内容
 //构建索引
 export async function buildSearchIndex() {
-    const cache = await get("notion:search_index");
-    if (cache) {
-        return  JSON.parse(cache);
+    try{
+        const cache = await get("notion:search_index");
+        if (cache) { // skip cache for testing purpose
+            return JSON.parse(cache);
+        }
+    }catch(e){
+        console.log("In buildSearchIndex()")
+        console.error(e);
     }
     const posts = await getAllPosts();
     const post_data = [];
@@ -39,28 +44,42 @@ export async function buildSearchIndex() {
         };
         page_data.push(index);
     }
-    await set("notion:search_index", JSON.stringify({posts: post_data,pages: page_data}),15 * 60);
+    await set("notion:search_index", JSON.stringify({posts: post_data,pages: page_data}),15 * 60).catch(err=>{
+        console.error(err);
+    });
 
     return {posts: post_data,pages: page_data};
 }
 
 async function getTotalWords() {
-    let totalwords = await get("notion:totalwords");
-    if (totalwords) {
-        return JSON.parse(totalwords);
+    try{
+        let totalwords = await get("notion:totalwords");
+        if (totalwords) {
+            return JSON.parse(totalwords);
+        }
+    }catch(e) {
+        console.log("In getTotalWords()")
+        console.error(e);
     }
     await del("notion:totalwords");
     return 0;
 }
 
 async function setTotalWords(words) {
-    await set("notion:totalwords", JSON.stringify(words));
+    await set("notion:totalwords", JSON.stringify(words)).catch(err=>{
+        console.error(err);
+    });
 }
 
 export async function getWordCount(blockId) {
-    const cache = await get(`notion:wordcount:${blockId}`);
-    if (cache) {
-        return JSON.parse(cache);
+    try{
+        const cache = await get(`notion:wordcount:${blockId}`);
+        if (cache) { // skip cache for testing purpose
+            return JSON.parse(cache);
+        }
+    }catch(e) {
+        console.log("In getWordCount()")
+        console.error(e);
     }
     const results = await getContent(blockId);
     let words = 0;
@@ -68,7 +87,9 @@ export async function getWordCount(blockId) {
         // console.log(result);
         words += result.text.length;
     }
-    await set(`notion:wordcount:${blockId}`, JSON.stringify(words));
+    await set(`notion:wordcount:${blockId}`, JSON.stringify(words)).catch(err=>{
+        console.error(err);
+    });
     let totalwords = await getTotalWords();
     totalwords += words;
     await setTotalWords(totalwords);
@@ -76,9 +97,14 @@ export async function getWordCount(blockId) {
 }
 
 export async function getAllTags() {
-    const cache = await get("notion:tags");
-    if (cache) {
-        return JSON.parse(cache);
+    try{
+        const cache = await get("notion:tags");
+        if (cache) { // skip cache for testing purpose
+            return JSON.parse(cache);
+        }
+    }catch(e){
+        console.log("In getAllTags()")
+        console.error(e);
     }
     const posts = await getAllPosts();
     let tags = [];
@@ -88,7 +114,9 @@ export async function getAllTags() {
         });
     });
     tags = Array.from(new Set(tags));
-    await set("notion:tags", JSON.stringify(tags));
+    await set("notion:tags", JSON.stringify(tags)).catch(err=>{
+        console.error(err);
+    });
     return tags;
 }
 
@@ -108,29 +136,43 @@ async function updateStatic(posts) {
         words += await getWordCount(post.id);
     })
     tags = Array.from(new Set(tags));
-    await set("notion:tags", JSON.stringify(tags));
-    await set("notion:years", JSON.stringify(years));
-    await set("notion:words", JSON.stringify(words));
+    await Promise.all([set("notion:tags", JSON.stringify(tags)), set("notion:years", JSON.stringify(years)), set("notion:words", JSON.stringify(words))]).catch((e)=>{
+        console.error(e);
+    })
+    return {tags, years, words};
 }
 
 export async function getStatics() {
-    const tags = await get("notion:tags");
-    const years = await get("notion:years");
-    const words = await get("notion:words");
-    const posts = await getAllPosts();
-    return {
-        tags: JSON.parse(tags),
-        years: JSON.parse(years),
-        words: JSON.parse(words),
-        posts: posts.length
+    try{
+        const tags = await get("notion:tags");
+        const years = await get("notion:years");
+        const words = await get("notion:words");
+        const posts = await getAllPosts();
+        return {
+            tags: JSON.parse(tags),
+            years: JSON.parse(years),
+            words: JSON.parse(words),
+            posts: posts.length
+        }
+    }catch(e){
+        console.log("In getStatics()")
+        console.error(e);
     }
+    const posts = await getAllPosts();
+    const {tags, years, words} = await updateStatic(posts);
+    return {tags, years, words, posts: posts.length};
 }
 
 export async function getAllPosts() {
     // redis cache
-    const cache = await get("notion:posts_data");
-    if (cache) { //skip cache for testing purpose
-        return JSON.parse(cache);
+    try{
+        const cache = await get("notion:posts_data");
+        if (cache) { //skip cache for testing purpose
+            return JSON.parse(cache);
+        }
+    }catch(e){
+        console.log("In getAllPosts()")
+        console.error(e);
     }
     const params = {
         database_id: NOTION_POST_DATABASE_ID,
@@ -207,7 +249,13 @@ export async function getPosts(pagesize = 10, nowPage = 0) {
     });
     return allPosts.slice((nowPage - 1) * pagesize, nowPage * pagesize);
 }
-
+export async function getPostsLength(){
+    const allPosts = await getAllPosts().catch((err) => {
+        console.error(err);
+        return [];
+    });
+    return allPosts.length;
+}
 export async function getPostsByTag(slug, pagesize, nowPage) {
     const allPosts = await getAllPosts().catch((err) => {
         console.error(err);
@@ -395,13 +443,18 @@ async function addToContents(results, childLvl = 0) {
 }
 
 export async function getContent(blockId) {
-    const cache = await get(`notion:block:${blockId}`);
-    if (cache) { // skip cache for testing purpose
-        return JSON.parse(cache);
+    try{
+        const cache = await get(`notion:block:${blockId}`);
+        if (cache) { // skip cache for testing purpose
+            return JSON.parse(cache);
+        }
+    }catch(e){
+        console.log("In getContent()")
+        console.error(e);
     }
     const results = await getAllBlocksByBlockId(blockId);
     const ress = await addToContents(results);
-    await set(`notion:block:${blockId}`, JSON.stringify(ress), 30 * 24 * 60 * 60); // 1day
+    await set(`notion:block:${blockId}`, JSON.stringify(ress), 30 * 24 * 60 * 60).catch((err)=>{console.log(err)}); // 1day
     return ress;
 }
 

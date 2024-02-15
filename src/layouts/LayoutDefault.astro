@@ -27,7 +27,7 @@ const feConfig = {
     PJAX: themeConfig.pjax,
     searchBase: "/search/", //如果能做出来的话
     home: "/",
-    buildTime: new Date("2023-06-19").toISOString(),
+    buildTime: new Date("2023-11-04").toISOString(),
     enableMath: themeConfig.enableMath,
     lazyload: themeConfig.lazyload,
     colorScheme: themeConfig.colorScheme,
@@ -116,6 +116,30 @@ const url = Astro.url;
     <link rel="stylesheet" href="/assets/overlayscrollbars.css"/>
     <script is:inline src="/assets/bundle-header.js"/>
     <style is:global> /* 剪切板 */
+    #scrollButton {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        color: white;
+        transform: translateX(-50%);
+    }
+
+    #scrollButton:hover {
+        filter: drop-shadow(2px 5px 6px white);
+    }
+
+    #scrollButton.rotated {
+        transform: rotateX(180deg);
+        /* Rotates the button 180 degrees around the X-axis */
+        transition: transform 0.5s ease;
+        /* Smooth transition for rotation */
+    }
+
+    .lazy-wrap:not(.no-banner) {
+        min-height: 0vh;
+        filter: brightness(1);
+        transition: min-height 0.5s ease, filter 1s ease;
+    }
     .clipboard {
         position: absolute;
         top: 3px;

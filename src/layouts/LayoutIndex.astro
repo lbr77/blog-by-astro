@@ -16,18 +16,12 @@ const title = props.title ?? siteConfig.title;
 // const title = props.titile || Astro.locals.config.title;
 const url = new URL(Astro.request.url);
 const posts = Astro.props.posts;
-let builtclass = ["wrapper", "container"];
-if (themeConfig.indexStyle == 1) {
-    builtclass.push("narrow");
-} else {
-    builtclass.push("wide");
-}
 ---
 <title hidden>
     {title}
 </title>
 <Ldjson url={url} banner={props.banner}/>
 <Banner banner="/assets/banner.jpg" type="index" title={title} desc={siteConfig.desc}/>
-<div class:list={builtclass}>
+<div class:list={["wrapper", "container",themeConfig.indexStyle == 1?"narrow":"wide"]}>
     <PostList posts={posts} nowPage={props.nowPage}/>
 </div>

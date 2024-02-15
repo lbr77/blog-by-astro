@@ -8,7 +8,7 @@ const {Content} = await blog.render();
 const {themeConfig} = Astro.locals.config;
 ---
 <Ldjson url={new URL(Astro.request.url)} banner={blog.data.banner}/>
-<Banner banner={blog.data.banner} type="post" bannerStyle={blog.data.bannerStyle} title={blog.data.title}
+<Banner banner={blog.data.banner} type="page" bannerStyle={blog.data.bannerStyle} title={blog.data.title}
         desc={blog.data.excerpt}/>
 <div class="wrapper container">
     <div class="contents-wrap">
