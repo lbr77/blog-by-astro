@@ -1,11 +1,12 @@
-import {getAllPosts,getAllTags} from "../utils/notion/posts.ts";
+import {getAllPosts, getAllTags} from "../utils/notion/posts.ts";
 import {getCollection} from "astro:content";
 
-async function generateeSiteMap(){
+async function generateeSiteMap() {
     const posts = await getAllPosts();
-    const pages  = await getCollection("pages");
+    const pages = await getCollection("pages");
     const tags = await getAllTags();
-    return `<xml version="1.0" encoding="UTF-8">
+    // @ts-ignore
+    let ret = `<xml version="1.0" encoding="UTF-8">
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
        <loc>http://nvme0n1p.dev/</loc>
@@ -15,35 +16,32 @@ async function generateeSiteMap(){
      </url>
      <url>
        <loc>http://nvme0n1p.dev/links</loc>
-     </url>
-     ${pages.map((page)=>{
-         return `<url>
-         <loc>http://nvme0n1p.dev/${page.slug}</loc>
-</url>`
-    })}
-     ${
-        tags.map((tag)=>{
-            return `<url>
-                <loc>http://nvme0n1p.dev/category/${tag}</loc>
-            </url>`
-        })
+     </url>`
+    for (let post of posts) {
+        ret += `<url>
+       <loc>http://nvme0n1p.dev/post/${post.slug}</loc>
+     </url>`
     }
-     ${
-        posts.map((post)=>{
-            return `<url>
-                <loc>http://nvme0n1p.dev/posts/${post.slug}</loc>
-                <lastmod>${post.updatedAt.split("T")[0]}</lastmod>
-            </url>`
-        })
+    for (let page of pages) {
+        ret += `<url>
+       <loc>http://nvme0n1p.dev/${page.slug}</loc>
+     </url>`
     }
-   </urlset>
+    for (let tag of tags) {
+        ret += `<url>
+       <loc>http://nvme0n1p.dev/category/${tag}</loc>
+     </url>`
+    }
+    ret += `</urlset>
    </xml>
    `
+    return ret;
 }
-export async function GET(){
-    return new Response(await generateeSiteMap(),{
-        headers:{
-            "Content-Type":"application/xml",
+
+export async function GET() {
+    return new Response(await generateeSiteMap(), {
+        headers: {
+            "Content-Type": "application/xml",
         }
     })
 }
