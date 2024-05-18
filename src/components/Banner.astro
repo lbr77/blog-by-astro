@@ -16,7 +16,7 @@ if (type === 'post' || type == 'page') {
 }
 ---
 
-<div class:list={["lazy-wrap",banner===""?"no-banner":"loading dark",type=="index"&&"index"]}>
+<div class:list={["lazy-wrap",banner===""?"no-banner":"loading dark",type=="index"&&"index"]} >
     {banner != "" ?
             <div id="banner" class={blur && "blur"}>
                 <img src={banner} class="lazyload browserlevel-lazy" loading="lazy"></div>
@@ -43,7 +43,7 @@ if (type === 'post' || type == 'page') {
         </svg>
     </div>
         <script>
-            document.getElementById('scrollButton').addEventListener('click', function () {
+            let triggered = function () {
                 var lazyWrap = document.querySelector('.lazy-wrap:not(.no-banner)');
                 var button = document.getElementById('scrollButton');
 
@@ -55,7 +55,8 @@ if (type === 'post' || type == 'page') {
                 // Toggle the 'rotated' class on the button
                 button.classList.toggle('rotated');
 
-            });
+            };
+            document.getElementById('scrollButton').addEventListener('click', triggered);
             let detect = document.querySelector(".index");
             let banner_img = document.querySelector("#banner > img");
             banner_img.style.width = "110%";
@@ -73,6 +74,7 @@ if (type === 'post' || type == 'page') {
             detect.addEventListener("mouseleave", function(n) {
                 banner_img.style.transition = ".3s", banner_img.style.transform = "translate(0,0)"
             });
+            triggered();
         </script></>: <>
         <div class="banner-title">
             <h1 class="post-title" set:html={title}/>
