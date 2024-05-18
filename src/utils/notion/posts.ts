@@ -454,7 +454,7 @@ export async function getContent(blockId) {
     }
     const results = await getAllBlocksByBlockId(blockId);
     const ress = await addToContents(results);
-    await set(`notion:block:${blockId}`, JSON.stringify(ress), 30 * 24 * 60 * 60).catch((err)=>{console.log(err)}); // 1day
+    await set(`notion:block:${blockId}`, JSON.stringify(ress), 60 * 60).catch((err)=>{console.log(err)}); // 1day
     return ress;
 }
 
