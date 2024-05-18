@@ -4,7 +4,7 @@ export const THEME_CONFIG: App.Locals['config'] = {
     siteConfig: {
         title: "LiBr",
         author: "LiBr",
-        desc: "LiBr's blog",
+        desc: "井底之蛙不识海，却知晓天空之蓝。",
         website: "https://nvme0n1p.dev/",
         locale: "zh-cn",
         twitter: "@0x88ffa357",
