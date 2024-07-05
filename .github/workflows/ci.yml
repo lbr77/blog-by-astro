@@ -56,7 +56,3 @@ jobs:
                     cache-from: type=local,src=/tmp/.buildx-cache
                     cache-to: type=local,dest=/tmp/.buildx-cache
                     labels: ${{ steps.metadata.outputs.labels }}
-            -   name: Inspect image
-                run: |
-                    docker buildx imagetools inspect \
-                        ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ steps.meta.outputs.version }}
