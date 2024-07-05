@@ -42,6 +42,8 @@ jobs:
                 uses: docker/metadata-action@v3
                 with: 
                     images: ${{ env.REGISTRY }}/${{ env.IMAGE }}
+            -   name: Make Dir for Cache
+                run: mkdir -p /tmp/.buildx-cache
             -   name: Build and push
                 uses: docker/build-push-action@v2
                 with:
