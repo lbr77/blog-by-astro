@@ -1,4 +1,6 @@
 ---
+import { getImageInfo } from '../utils/util.ts';
+import { Image as aImage } from 'astro:assets';
 interface Props {
     type: string;
     title: string;
@@ -9,7 +11,7 @@ interface Props {
 }
 let {type, title, bannerStyle, banner, bannerType, desc} = Astro.props;
 let blur = false;
-
+let {width, height} = await getImageInfo(`${Astro.locals.config.siteConfig.website.slice(0,-1)}${banner}`);
 if (type === 'post' || type == 'page') {
     banner = Astro.props.bannerStyle < 2 ? banner : "";
     blur = Astro.props.bannerType === 1;
@@ -19,7 +21,8 @@ if (type === 'post' || type == 'page') {
 <div class:list={["lazy-wrap",banner===""?"no-banner":"loading dark",type=="index"&&"index"]} >
     {banner != "" ?
             <div id="banner" class={blur && "blur"}>
-                <img src={banner} class="lazyload browserlevel-lazy" loading="lazy"></div>
+                <img src={banner} class="lazyload browserlevel-lazy" loading="lazy" width={width} height={height} />    
+            </div>
             <script>$('body>header').removeClass('force-dark').removeClass('no-banner');</script>
         : <>
                 <script>$('body>header').addClass('force-dark').addClass('no-banner');</script>

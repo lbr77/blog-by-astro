@@ -74,7 +74,7 @@ const themeConfig = Astro.locals.config.themeConfig;
     </aside>
 
     <script data-manual src="/assets/bundle.js"/>
-    {<script>
+    <!-- {<script>
     var swUri = '/VOIDCacheRule.js';
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
@@ -86,7 +86,7 @@ const themeConfig = Astro.locals.config.themeConfig;
         });
     }
     else console.log('ServiceWorker not supported.');
-    </script>}
+    </script>} -->
 
     {themeConfig.enableMath && <script is:inline src="/assets/libs/mathjax/2.7.4/MathJax.js"/>}
     <script is:inline src="/assets/VOID.js"/>

@@ -1,5 +1,7 @@
 ---
 import {getWordCount} from "../utils/notion/posts";
+import { getImageInfo } from "../utils/util";
+import { Image as aImage } from "astro:assets";
 const data = Astro.props.post;
 let generateClass = () => {
     let bannerAsCover = data.bannerAsCover;
@@ -22,6 +24,13 @@ let formatCustomDate = (date) => {
 
     return `${month} ${day}${suffix},${year} `;
 }
+let width = 0;
+let height = 0;
+if(data.banner != ""){
+    let a  = await getImageInfo(data.banner);
+    width = a.width || 0;
+    height = a.height || 0;
+}
 ---
 <li id={`p-${data.id.slice(0,5)}`} class={generateClass()}>
     <a href={`/posts/${data.slug}`}>
@@ -29,8 +38,9 @@ let formatCustomDate = (date) => {
             <div class="articleBody">
                 {data.banner != "" &&
                         <div class="banner">
-                            <img class="lazyload browserlevel-lazy" loading="lazy" src={data.banner}
+                            <img class="lazyload browserlevel-lazy" loading="lazy" src={data.banner} width={width} height={height} 
                                  alt={data.title}/>
+                            {/* <aImage src={data.banner} alt={data.title} class="lazyload browserlevel-lazy what-can-i-say" loading="lazy" width={width} height={height} /> */}
                         </div>}
                 <div class="content-wrap">
                     <div class="post-meta-index">

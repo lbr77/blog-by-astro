@@ -1,13 +1,17 @@
 ---
-
+import { getImageInfo } from "../../utils/util";
+import { Image as aImage } from "astro:assets";
 let { block } = Astro.props;
 let imgSrc = "";
 
 if (block.options != null && "url" in block.options) {
     imgSrc = block.options.url;
 }
+
+let { width, height } = await getImageInfo(imgSrc);
+
 ---
 <a href={imgSrc} data-fancybox="gallery">
-    <img src={imgSrc} alt="image" class="lazyload browserlevel-lazy" loading="lazy" />
+    <aImage src={imgSrc} alt="image" class="lazyload browserlevel-lazy" loading="lazy" width={width} height={height} /> 
 </a>
 

@@ -1,42 +1,11 @@
 version: "3"
 services:
-  astro-blog:
-    build: .
-    networks:
-      - traefik
-      - astro
-    container_name: astro_blog
-    restart: always
-    env_file:
-      - .env
-    labels:
-      - "traefik.enable=true"
-      
-      - "traefik.http.middlewares.gzip.compress=true"
-      - "traefik.http.middlewares.redir-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.redir-https.redirectscheme.permanent=false"
-
-      - "traefik.http.routers.astro-blog-http.entrypoints=http"
-      - "traefik.http.routers.astro-blog-http.rule=Host(`${HOSTNAME}`)"
-      - "traefik.http.routers.astro-blog-http.middlewares=redir-https@docker"
-
-      - "traefik.http.routers.astro-blog.rule=Host(`${HOSTNAME}`)"
-      - "traefik.http.routers.astro-blog.service=astro-blog"
-      - "traefik.http.routers.astro-blog.entrypoints=https"
-      - "traefik.http.routers.astro-blog.tls=true"
-      - "traefik.http.routers.astro-blog.tls.certresolver=le"
-      - "traefik.http.routers.astro-blog.middlewares=gzip"
-      
-      - "traefik.http.services.astro-blog.loadbalancer.server.port=4321"
-      - "traefik.http.services.astro-blog.loadbalancer.passhostheader=true"
-
-      - "traefik.docker.network=traefik"
   redis:
     image: redis:6.2.4
     container_name: redis
     restart: always
-    networks:
-      - astro
+    ports:
+      - 6379:6379
     command: redis-server --requirepass liboruiLBR9911
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
@@ -53,8 +22,3 @@ services:
         max-size: "10m"
 
 
-networks:
-  traefik:
-    external: true
-  astro:
-    external: true
